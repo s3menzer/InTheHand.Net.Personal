@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.WindowsBluetoothRadio
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using InTheHand.Net.Bluetooth.Factory;
 
-#if WinXP
+#if (WinXP || WIN7)
 using InTheHand.Win32;
 using System.Diagnostics.CodeAnalysis;
 
@@ -385,9 +385,9 @@ namespace InTheHand.Net.Bluetooth.Msft
                 rk.Close();
 
                 // This check decides what IO control code to use based on if we're in XP or Vista.
-                // The XP one I had thanks to the Mark article.  But that wasn't valid on Vista.  So? 
+                // The XP one I had thanks to the Mark article.  But that wasn't valid on Vista.  So?
                 // I had to unpack these CTL_CODE generated values from the old driver kit (thank you
-                // dusty old CD's in my office) and then figure out what it was and then go searching 
+                // dusty old CD's in my office) and then figure out what it was and then go searching
                 // through the new driver kit to match it up. Ok so for those of you following along at home
                 // 0x411008 in Vista CTL_CODE() parlance is:
                 //   DeviceType ==  0x41 == FILE_DEVICE_BLUETOOTH
@@ -413,8 +413,8 @@ namespace InTheHand.Net.Bluetooth.Msft
 
             try {
                 NativeMethods.SP_DEVINFO_DATA data = new NativeMethods.SP_DEVINFO_DATA();
-                // On 32bit platforms, all SetupApi structures are 1-Byte packed. 
-                // On 64bit platforms the SetupApi structures are 8-byte packed. 
+                // On 32bit platforms, all SetupApi structures are 1-Byte packed.
+                // On 64bit platforms the SetupApi structures are 8-byte packed.
                 // i.e. for 32 bit SP_DEVINFO_DATA.cbSize=28, for 64Bit SP_DEVINFO_DATA.cbSize=(28+4)=32.
                 data.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(data);
                 uint idx = 0;

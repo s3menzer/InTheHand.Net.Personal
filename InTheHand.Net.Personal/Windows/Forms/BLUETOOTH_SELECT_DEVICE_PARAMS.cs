@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.BLUETOOTH_SELECT_DEVICE_PARAMS
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the Microsoft Public License (Ms-PL) - see License.txt
 
@@ -159,7 +159,7 @@ namespace InTheHand.Windows.Forms
             set { fForceAuthentication = value; }
         }
 
-#if WinXP
+#if (WinXP || WIN7)
         string InTheHand.Windows.Forms.ISelectBluetoothDevice.Info
         {
             get { return pszInfo; }

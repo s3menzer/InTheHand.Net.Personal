@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // Net.Bluetooth.BluetoothWin32Events
-// 
+//
 // Copyright (c) 2008-2011 Alan J.McFarlane, All rights reserved.
 // Copyright (c) 2008-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -62,7 +62,7 @@ namespace InTheHand.Net.Bluetooth
     /// <see href="http://32feetnetdev.wordpress.com/2010/11/15/device-discovery-improvements-on-msftwin32/">32feet blog: Device Discovery improvements on MSFT+Win32</see>
     /// for more information.
     /// </para>
-    /// 
+    ///
     /// <para>For example when connecting and disconnecting on Windows XP to
     /// another device that is not paired we see:
     /// </para>
@@ -499,7 +499,7 @@ namespace InTheHand.Net.Bluetooth
             }
 
             [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)
-                // Keep FxCop happy, for 
+                // Keep FxCop happy, for
             ]
             internal void btRegister(IntPtr bluetoothRadioHandle)
             {
@@ -600,7 +600,7 @@ namespace InTheHand.Net.Bluetooth
             } else if (BluetoothDeviceNotificationEvent.PinRequest == hdrHandle.dbch_eventguid) {
                 text += "GUID_BLUETOOTH_PIN_REQUEST";
                 // "This message should be ignored by the application.
-                //  If the application must receive PIN requests, the 
+                //  If the application must receive PIN requests, the
                 //  BluetoothRegisterForAuthentication function should be used."
             } else if (BluetoothDeviceNotificationEvent.L2capEvent == hdrHandle.dbch_eventguid) {
                 text += "GUID_BLUETOOTH_L2CAP_EVENT";
@@ -615,7 +615,7 @@ namespace InTheHand.Net.Bluetooth
             } else if (BluetoothDeviceNotificationEvent.HciEvent == hdrHandle.dbch_eventguid) {
                 text += "GUID_BLUETOOTH_HCI_EVENT";
                 // struct BTH_HCI_EVENT_INFO {
-                //   BTH_ADDR bthAddress; UCHAR connectionType; UCHAR connected; } 
+                //   BTH_ADDR bthAddress; UCHAR connectionType; UCHAR connected; }
 #if DEBUG
                 var hciE = Marshal_PtrToStructure<BTH_HCI_EVENT_INFO>(pData);
                 Debug.WriteLine(string.Format(CultureInfo.InvariantCulture,
@@ -623,7 +623,7 @@ namespace InTheHand.Net.Bluetooth
                     hciE.bthAddress, hciE.connectionType, hciE.connected));
 #endif
             }
-                // -- New somewhere after WinXP.
+                // -- New somewhere after (WinXP || WIN7).
             else if (BluetoothDeviceNotificationEvent.AuthenticationRequestEvent == hdrHandle.dbch_eventguid) {
                 text += "GUID_BLUETOOTH_AUTHENTICATION_REQUEST";
                 // Same content as BluetoothRegisterForAuthenticationEx
@@ -695,8 +695,8 @@ namespace InTheHand.Net.Bluetooth
             /// </summary>
             public static readonly Guid PinRequest = new Guid("{BD198B7C-24AB-4B9A-8C0D-A8EA8349AA16}");
             /// <summary>
-            /// &#x201C;This message is sent when an L2CAP channel between the local radio and a remote Bluetooth device has been established or terminated. 
-            /// For L2CAP channels that are multiplexers, such as RFCOMM, this message is only sent when the underlying channel is established, 
+            /// &#x201C;This message is sent when an L2CAP channel between the local radio and a remote Bluetooth device has been established or terminated.
+            /// For L2CAP channels that are multiplexers, such as RFCOMM, this message is only sent when the underlying channel is established,
             /// not when each multiplexed channel, such as an RFCOMM channel, is established or terminated.&#x201D;
             /// </summary>
             public static readonly Guid L2capEvent = new Guid("{7EAE4030-B709-4AA8-AC55-E953829C9DAA}");
@@ -705,7 +705,7 @@ namespace InTheHand.Net.Bluetooth
             /// </summary>
             [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hci")]
             public static readonly Guid HciEvent = new Guid("{FC240062-1541-49BE-B463-84C4DCD7BF7F}");
-            // New somewhere after WinXP.
+            // New somewhere after (WinXP || WIN7).
             public static readonly Guid AuthenticationRequestEvent = new Guid("{5DC9136D-996C-46DB-84F5-32C0A3F47352}");
             public static readonly Guid KeyPressEvent = new Guid("{D668DFCD-0F4E-4EFC-BFE0-392EEEC5109C}");
             public static readonly Guid HciVendorEvent = new Guid("{547247e6-45bb-4c33-af8c-c00efe15a71d}");
@@ -849,53 +849,53 @@ namespace InTheHand.Net.Bluetooth
         enum Dbt
         {
             /// <summary>
-            /// A request to change the current configuration (dock or undock) has been canceled. 
+            /// A request to change the current configuration (dock or undock) has been canceled.
             /// </summary>
             ConfigChangeCanceled = 0x0019,
             /// <summary>
-            /// The current configuration has changed, due to a dock or undock. 
+            /// The current configuration has changed, due to a dock or undock.
             /// </summary>
             ConfigChanged = 0x0018,
             /// <summary>
-            /// A custom event has occurred. 
+            /// A custom event has occurred.
             /// </summary>
             /// <remarks>Windows NT 4.0 and Windows 95:  This value is not supported.</remarks>
             CustomEvent = 0x8006,
             /// <summary>
-            /// A device or piece of media has been inserted and is now available. 
+            /// A device or piece of media has been inserted and is now available.
             /// </summary>
             DeviceArrival = 0x8000,
             /// <summary>
-            /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal. 
+            /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal.
             /// </summary>
             DeviceQueryRemove = 0x8001,
             /// <summary>
-            /// A request to remove a device or piece of media has been canceled. 
+            /// A request to remove a device or piece of media has been canceled.
             /// </summary>
             DeviceQueryRemoveFailed = 0x8002,
             /// <summary>
-            /// A device or piece of media has been removed. 
+            /// A device or piece of media has been removed.
             /// </summary>
             DeviceRemoveComplete = 0x8004,
             /// <summary>
-            /// A device or piece of media is about to be removed. Cannot be denied. 
+            /// A device or piece of media is about to be removed. Cannot be denied.
             /// </summary>
             DeviceRemovePending = 0x8003,
             /// <summary>
-            /// A device-specific event has occurred. 
+            /// A device-specific event has occurred.
             /// </summary>
             DeviceTypeSpecific = 0x8005,
             /// <summary>
-            /// A device has been added to or removed from the system. 
+            /// A device has been added to or removed from the system.
             /// </summary>
             /// <remarks>Windows NT 4.0 and Windows Me/98/95:  This value is not supported.</remarks>
             DevNodesChanged = 0x0007,
             /// <summary>
-            /// Permission is requested to change the current configuration (dock or undock). 
+            /// Permission is requested to change the current configuration (dock or undock).
             /// </summary>
             QueryChangeConfig = 0x0017,
             /// <summary>
-            /// The meaning of this message is user-defined. 
+            /// The meaning of this message is user-defined.
             /// </summary>
             UserDefined = 0xFFFF,
         }//class
@@ -911,7 +911,7 @@ namespace InTheHand.Net.Bluetooth
             /// /// </summary>
             DevNode = 0x00000001,
             /// <summary>
-            /// 
+            ///
             /// </summary>
             Volume = 0x00000002,
             /// <summary>
@@ -967,7 +967,7 @@ namespace InTheHand.Net.Bluetooth
             internal readonly IntPtr dbch_hdevnotify;
             internal readonly Guid dbch_eventguid;
             internal readonly Int32 dbch_nameoffset;
-            // We can't include the fake data array because we use this struct as 
+            // We can't include the fake data array because we use this struct as
             // the first field in other structs!
             // byte dbch_data__0; //dbch_data[1];
 

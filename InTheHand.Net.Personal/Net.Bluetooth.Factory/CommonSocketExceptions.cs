@@ -43,7 +43,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         }
 
         //--------------------------------------------------------------
-#if WinXP
+#if (WinXP || WIN7)
         //static SocketError ___err;
 #endif
         //const int SocketError_ConnectFailed = 10061; //ConnectionRefused = 10061,

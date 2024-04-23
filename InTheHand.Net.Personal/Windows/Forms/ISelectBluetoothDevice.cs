@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Windows.Forms.ISelectBluetoothDevice
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the Microsoft Public License (Ms-PL) - see License.txt
 
@@ -21,7 +21,7 @@ namespace InTheHand.Windows.Forms
         bool ShowDiscoverableOnly { get; set; }
         bool ForceAuthentication { get; set; }
         string Info { get; set; }
-#if WinXP
+#if (WinXP || WIN7)
         bool AddNewDeviceWizard { get; set; }
         bool SkipServicesPage { get; set; }
 #endif

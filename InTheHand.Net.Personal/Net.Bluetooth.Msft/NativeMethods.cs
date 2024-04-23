@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.NativeMethods
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -162,7 +162,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
 		[DllImport(btdrtDll, SetLastError=true)]
 		internal static extern int BthSetSecurityUI(IntPtr hEvent, int dwStoreTimeout, int dwProcTimeout);
-		
+
 		[DllImport(btdrtDll, SetLastError=true)]
 		internal static extern int BthTerminateIdleConnections();
 
@@ -177,12 +177,12 @@ namespace InTheHand.Net.Bluetooth.Msft
 
 		[DllImport(btdrtDll, SetLastError=true)]
 		internal static extern int BthWritePageTimeout(ushort timeout);
-		
+
 		[DllImport(btdrtDll, SetLastError=true)]
 		internal static extern int BthWriteScanEnableMask(byte mask);
         [DllImport(btdrtDll, SetLastError = true)]
         internal static extern int BthWriteScanEnableMask(WinCeScanMask mask);
- 
+
 
 
 		//Utils
@@ -202,27 +202,27 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         internal enum BTE
         {
-            CONNECTION = 100, 
-            DISCONNECTION = 101, 
-            ROLE_SWITCH = 102, 
-            MODE_CHANGE = 103, 
-            PAGE_TIMEOUT = 104, 
- 
-            KEY_NOTIFY = 200, 
-            KEY_REVOKED = 201, 
- 
-            LOCAL_NAME = 300, 
-            COD = 301, 
- 
-            STACK_UP = 400, 
-            STACK_DOWN = 401, 
+            CONNECTION = 100,
+            DISCONNECTION = 101,
+            ROLE_SWITCH = 102,
+            MODE_CHANGE = 103,
+            PAGE_TIMEOUT = 104,
+
+            KEY_NOTIFY = 200,
+            KEY_REVOKED = 201,
+
+            LOCAL_NAME = 300,
+            COD = 301,
+
+            STACK_UP = 400,
+            STACK_DOWN = 401,
         }
 
         [Flags()]
         internal enum BTE_CLASS
         {
             CONNECTIONS = 1,
-            PAIRING = 2, 
+            PAIRING = 2,
             DEVICE = 4,
             STACK = 8,
         }
@@ -296,7 +296,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
 
 
-#if WinXP
+#if (WinXP || WIN7)
 
         internal enum BTH_ERROR
         {
@@ -434,7 +434,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         //Radio
 
-        // (Tried to use WindowsRadioHandle instead of IntPtr for the second 
+        // (Tried to use WindowsRadioHandle instead of IntPtr for the second
         // param but got a missing method type exception.)
         [DllImport(irpropsDll, SetLastError = true)]
         internal static extern IntPtr BluetoothFindFirstRadio(ref BLUETOOTH_FIND_RADIO_PARAMS pbtfrp, out IntPtr phRadio);
@@ -571,7 +571,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         internal enum DIGCF
         {
             PRESENT = 0x00000002, // Return only devices that are currently present in a system.
-            ALLCLASSES = 0x00000004, // Return a list of installed devices for all device setup classes or all device interface classes. 
+            ALLCLASSES = 0x00000004, // Return a list of installed devices for all device setup classes or all device interface classes.
             PROFILE = 0x00000008, // Return only devices that are a part of the current hardware profile.
         }
 
@@ -722,7 +722,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             //#endif // FULL_EIR_SUPPORT
             //
             /// <summary>
-            /// Input:   BTH_VENDOR_SPECIFIC_COMMAND 
+            /// Input:   BTH_VENDOR_SPECIFIC_COMMAND
             /// Output:  PVOID
             /// </summary>
             internal const uint IOCTL_BTH_HCI_VENDOR_COMMAND = 0x410050;
@@ -770,7 +770,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             internal const uint IOCTL_BTH_SDP_SUBMIT_RECORD_WITH_INFO = 0x41021c;
         }
 
-        // The SetupDiGetClassDevs function returns a handle to a device information set that contains requested device information elements for a local machine. 
+        // The SetupDiGetClassDevs function returns a handle to a device information set that contains requested device information elements for a local machine.
         [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern IntPtr SetupDiGetClassDevs(
             ref Guid classGuid,
@@ -778,7 +778,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             IntPtr hwndParent,
             DIGCF flags);
 
-        // The SetupDiEnumDeviceInfo function returns a SP_DEVINFO_DATA structure that specifies a device information element in a device information set. 
+        // The SetupDiEnumDeviceInfo function returns a SP_DEVINFO_DATA structure that specifies a device information element in a device information set.
         [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiEnumDeviceInfo(
@@ -823,19 +823,19 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <summary>
         /// Register the service. For SAP, this means sending out a periodic broadcast.
         /// This is an NOP for the DNS namespace.
-        /// For persistent data stores, this means updating the address information. 
+        /// For persistent data stores, this means updating the address information.
         /// </summary>
         RNRSERVICE_REGISTER = 0,
         /// <summary>
         ///  Remove the service from the registry.
         ///  For SAP, this means stop sending out the periodic broadcast.
         ///  This is an NOP for the DNS namespace.
-        ///  For persistent data stores this means deleting address information. 
+        ///  For persistent data stores this means deleting address information.
         /// </summary>
         RNRSERVICE_DEREGISTER,
         /// <summary>
         /// Delete the service from dynamic name and persistent spaces.
-        /// For services represented by multiple CSADDR_INFO structures (using the SERVICE_MULTIPLE flag), only the specified address will be deleted, and this must match exactly the corresponding CSADDR_INFO structure that was specified when the service was registered 
+        /// For services represented by multiple CSADDR_INFO structures (using the SERVICE_MULTIPLE flag), only the specified address will be deleted, and this must match exactly the corresponding CSADDR_INFO structure that was specified when the service was registered
         /// </summary>
         RNRSERVICE_DELETE,
 

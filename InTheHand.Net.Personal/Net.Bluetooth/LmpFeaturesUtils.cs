@@ -1,4 +1,4 @@
-﻿#if WinXP
+﻿#if (WinXP || WIN7)
 using System;
 using System.Collections.Generic;
 using System.Text;

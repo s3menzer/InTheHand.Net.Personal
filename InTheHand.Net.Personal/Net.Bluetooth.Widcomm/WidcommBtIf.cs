@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Widcomm.WidcommBtIf
-// 
+//
 // Copyright (c) 2008-2010 In The Hand Ltd, All rights reserved.
 // Copyright (c) 2008-2010 Alan J. McFarlane, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -110,7 +110,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
                 [MarshalAs(UnmanagedType.Bool)] out bool conno,
                 [MarshalAs(UnmanagedType.Bool)] out bool disco);
 
-#if !WinXP
+#if !(WinXP || WIN7)
             [DllImport(WidcommNativeBits.WidcommDll)]
             internal static extern void BtIf_SetDeviceConnectableDiscoverable(IntPtr pObj,
                 [MarshalAs(UnmanagedType.Bool)] bool connectable,
@@ -191,15 +191,15 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         }
 
         // From the Widcomm documentation:
-        //   An object of this class must be instantiated before any other DK 
+        //   An object of this class must be instantiated before any other DK
         //   classes are used (typically at application startup). An object
-        //   of this class should not be deleted until the application has 
+        //   of this class should not be deleted until the application has
         //   finished all interactions with the stack (typically at application
-        //   exit). *** Only one object of this class should be instantiated by 
+        //   exit). *** Only one object of this class should be instantiated by
         //   the application. ***
         static volatile bool s_alreadyExists;
         IntPtr m_pBtIf;
-        // So do we need a list of parents (as WeakReferences) and notify each on 
+        // So do we need a list of parents (as WeakReferences) and notify each on
         // each event?
         WidcommBtInterface m_parent;
         readonly WidcommBluetoothFactory _factory;
@@ -325,7 +325,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
 
         //-------------
         const string ModuleName32feet = "32feetWidcomm";
-#if WinXP
+#if (WinXP || WIN7)
         const string ModuleNameWidcomm1 = "btwapi";
         const string ModuleNameWidcomm0 = "wbtapi";
 #else
@@ -336,7 +336,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         private static string GetWidcommInstalledModuleName()
         {
             string moduleNameWidcomm;
-#if WinXP
+#if (WinXP || WIN7)
             moduleNameWidcomm = ModuleNameWidcomm0;
 #else
             OperatingSystem ver = Environment.OSVersion;
@@ -366,8 +366,8 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         private static LibraryStatus CheckDependencies(Exception wrapException)
         {
             string[] nameList = { ModuleName32feet,
-#if WinXP
-                                    ModuleNameWidcomm0, 
+#if (WinXP || WIN7)
+                                    ModuleNameWidcomm0,
                                     ModuleNameWidcomm1
 #else
                                     GetWidcommInstalledModuleName()
@@ -687,7 +687,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
 
         public void SetDeviceConnectableDiscoverable(bool connectable, bool forPairedOnly, bool discoverable)
         {
-#if WinXP
+#if (WinXP || WIN7)
             throw new NotSupportedException("No Widcomm API support.");
 #else
             try {
@@ -712,9 +712,9 @@ namespace InTheHand.Net.Bluetooth.Widcomm
             bool success = NativeMethods.BtIf_GetConnectionStats(m_pBtIf, bd_addr,
                 out stats, Marshal.SizeOf(stats));
             if (!success) {
-                // Occurs mostly.  Apparently a connection must exist for Rssi to 
+                // Occurs mostly.  Apparently a connection must exist for Rssi to
                 // be read, both from observation and from the Widcomm docs:
-                //   "TRUE, if a connection attempt has been initiated; FALSE, if 
+                //   "TRUE, if a connection attempt has been initiated; FALSE, if
                 //    a connection attempt has not been initiated"
                 return int.MinValue;
             } else {
@@ -814,19 +814,19 @@ namespace InTheHand.Net.Bluetooth.Widcomm
     {
         SUCCESS,
         /// <summary>
-        /// Could not connect to remote device 
+        /// Could not connect to remote device
         /// </summary>
         CONNECT_ERR,
         /// <summary>
-        /// Remote device rejected the connection 
+        /// Remote device rejected the connection
         /// </summary>
         CONNECT_REJ,
         /// <summary>
-        /// Security failed 
+        /// Security failed
         /// </summary>
         SECURITY,
         /// <summary>
-        /// Remote Service Record Error 
+        /// Remote Service Record Error
         /// </summary>
         BAD_RECORD,
         /// <summary>

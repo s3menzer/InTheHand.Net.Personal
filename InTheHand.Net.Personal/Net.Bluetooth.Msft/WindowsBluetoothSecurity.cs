@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.WindowsBluetoothSecurity
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -21,7 +21,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         internal WindowsBluetoothSecurity()
         { }
 
-        //#if WinXP
+        //#if (WinXP || WIN7)
         private System.Collections.Hashtable authenticators = new System.Collections.Hashtable();
         //#endif
 
@@ -45,7 +45,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// would set the PIN for the duration of authentication, and then revoke
         /// it after authentication is complete.&#x201D;
         /// </para>
-        /// <para>See also 
+        /// <para>See also
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.RevokePin(InTheHand.Net.BluetoothAddress)"/>
         /// </para>
         /// </remarks>
@@ -105,7 +105,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// </para>
         /// <para>On Windows CE platforms this removes any pending BluetoothWin32Authentication object but does not remove the PIN for an already authenticated device.
         /// Use RemoveDevice to ensure a pairing is completely removed.</para>
-        /// <para>See also 
+        /// <para>See also
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.SetPin(InTheHand.Net.BluetoothAddress,System.String)"/>
         /// </para>
         /// </remarks>
@@ -158,7 +158,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// if the pin argument is set to null a Wizard is displayed to accept a PIN from the user,
         /// otherwise the function executes in transparent mode.
         /// </para>
-        /// <para>See also 
+        /// <para>See also
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.SetPin(InTheHand.Net.BluetoothAddress,System.String)"/>
         /// </para>
         /// </remarks>
@@ -246,7 +246,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                 RegistryKey rkServices = rkNewDevice.CreateSubKey("Services");
                 ServiceRecord[] recs = bdi.GetServiceRecords(BluetoothService.SerialPort);
                 //byte[][] recs = bdi.GetServiceRecordsUnparsedWindowsRaw(BluetoothService.SerialPort);
-                
+
                 if (recs.Length > 0)
                 {
                     byte[] servRecord = recs[0].SourceBytes;
@@ -436,7 +436,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// that is provided by the UI handler is signaled, the UI handler must call
         /// this function multiple times until the call fails.&#x201D;
         /// </para>
-        /// <para>See also 
+        /// <para>See also
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.RefusePinRequest(InTheHand.Net.BluetoothAddress)"/>
         /// and <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.AnswerPinRequest(InTheHand.Net.BluetoothAddress,System.String)"/>
         /// </para>
@@ -475,7 +475,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// retrieved by <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.GetPinRequest()"/>
         /// function.&#x201D;
         /// </para>
-        /// <para>See also 
+        /// <para>See also
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.GetPinRequest"/>
         /// and <see cref="M:InTheHand.Net.Bluetooth.BluetoothSecurity.AnswerPinRequest(InTheHand.Net.BluetoothAddress,System.String)"/>
         /// </para>

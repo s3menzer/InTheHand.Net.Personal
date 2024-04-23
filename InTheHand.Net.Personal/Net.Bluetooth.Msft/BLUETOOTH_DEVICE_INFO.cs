@@ -1,13 +1,13 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.BLUETOOTH_DEVICE_INFO
-// 
+//
 // Copyright (c) 2003-2008 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
 using System;
 using System.Runtime.InteropServices;
-#if WinXP
+#if (WinXP || WIN7)
 using InTheHand.Win32;
 using System.Text;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ using System.Diagnostics;
 namespace InTheHand.Net.Bluetooth.Msft
 {
 
-#if WinXP
+#if (WinXP || WIN7)
     [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
 #endif
     internal struct BLUETOOTH_DEVICE_INFO
@@ -24,22 +24,22 @@ namespace InTheHand.Net.Bluetooth.Msft
         internal int dwSize;
         internal long Address;
         internal uint ulClassofDevice;
-#if WinXP
+#if (WinXP || WIN7)
         [MarshalAs(UnmanagedType.Bool)]
 #endif
         internal bool fConnected;
-#if WinXP
+#if (WinXP || WIN7)
         [MarshalAs(UnmanagedType.Bool)]
 #endif
         internal bool fRemembered;
-#if WinXP
+#if (WinXP || WIN7)
         [MarshalAs(UnmanagedType.Bool)]
 #endif
         internal bool fAuthenticated;
-#if WinXP
+#if (WinXP || WIN7)
         internal SYSTEMTIME stLastSeen;
         //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16, ArraySubType = UnmanagedType.U1)]
-        internal SYSTEMTIME stLastUsed;  
+        internal SYSTEMTIME stLastUsed;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst=248)]
 #endif
         internal string szName;
@@ -52,7 +52,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             fConnected = false;
             fRemembered = false;
             fAuthenticated = false;
-#if WinXP
+#if (WinXP || WIN7)
             stLastSeen = new SYSTEMTIME();
             stLastUsed = new SYSTEMTIME();
 
@@ -74,7 +74,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             fConnected = false;
             fRemembered = false;
             fAuthenticated = false;
-#if WinXP
+#if (WinXP || WIN7)
             stLastSeen = new SYSTEMTIME();
             stLastUsed = new SYSTEMTIME();
 
@@ -85,7 +85,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             szName = "";
         }
 
-#if WinXP
+#if (WinXP || WIN7)
         internal DateTime LastSeen
         {
             get

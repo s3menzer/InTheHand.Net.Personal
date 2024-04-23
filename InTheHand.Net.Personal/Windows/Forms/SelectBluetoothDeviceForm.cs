@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Windows.Forms.SelectBluetoothDeviceDialogForm
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the Microsoft Public License (Ms-PL) - see License.txt
 
@@ -29,7 +29,7 @@ namespace InTheHand.Windows.Forms
     /// <summary>
     /// Managed code dialog for Windows CE systems.
     /// </summary>
-    internal sealed class SelectBluetoothDeviceForm 
+    internal sealed class SelectBluetoothDeviceForm
 #if ! NO_WINFORMS
         : System.Windows.Forms.Form, ISelectBluetoothDevice
 #endif
@@ -52,7 +52,7 @@ namespace InTheHand.Windows.Forms
         //private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         //[DllImport("coredll")]
-        //private static extern int GetWindowLong(IntPtr hWnd, int nIndex); 
+        //private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 #endif
 
 
@@ -140,9 +140,9 @@ namespace InTheHand.Windows.Forms
             this.labelInfo = new System.Windows.Forms.Label();
 #endif
             this.SuspendLayout();
-            // 
+            //
             // lvDevices
-            // 
+            //
             this.lvDevices.Columns.Add(this.clmDevice);
             this.lvDevices.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
             this.lvDevices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -157,56 +157,56 @@ namespace InTheHand.Windows.Forms
             this.lvDevices.TabIndex = 0;
             this.lvDevices.View = System.Windows.Forms.View.Details;
             this.lvDevices.ItemActivate += new System.EventHandler(this.selectDevice);
-            // 
+            //
             // clmDevice
-            // 
+            //
             this.clmDevice.Text = "ColumnHeader";
             this.clmDevice.Width = 100;
-            // 
+            //
             // mainMenu1
-            // 
+            //
             this.mainMenu1.MenuItems.Add(this.mnuSelect);
             this.mainMenu1.MenuItems.Add(this.mnuMenu);
-            // 
+            //
             // mnuSelect
-            // 
+            //
             this.mnuSelect.Enabled = false;
             this.mnuSelect.Text = "Select";
             this.mnuSelect.Click += new System.EventHandler(this.selectDevice);
-            // 
+            //
             // mnuMenu
-            // 
+            //
             this.mnuMenu.MenuItems.Add(this.mnuAgain);
             this.mnuMenu.MenuItems.Add(this.mnuCancel);
             this.mnuMenu.Text = "Menu";
-            // 
+            //
             // mnuAgain
-            // 
+            //
             this.mnuAgain.Enabled = false;
             this.mnuAgain.Text = "Search Again";
             this.mnuAgain.Click += new System.EventHandler(this.mnuAgain_Click);
-            // 
+            //
             // mnuCancel
-            // 
+            //
             this.mnuCancel.Text = "Cancel";
             this.mnuCancel.Click += new System.EventHandler(this.mnuCancel_Click);
 #if NETCF
-            // 
+            //
             // imageList1
-            // 
+            //
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            // 
+            //
             // labelInfo
-            // 
+            //
             this.labelInfo.Location = new System.Drawing.Point(3, 3);
             this.labelInfo.Name = "labelInfo";
             this.labelInfo.Size = new System.Drawing.Size(0, 20);
             this.labelInfo.Font = new Font("Tahoma", 9f, FontStyle.Bold);
             this.labelInfo.ForeColor = SystemColors.ActiveCaption;
 #endif
-            // 
+            //
             // SelectBluetoothDeviceForm
-            // 
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(240, 240);
             this.ControlBox = false;
@@ -239,7 +239,7 @@ namespace InTheHand.Windows.Forms
             //pick a font size based on dpi and use font smoothing
             /*Microsoft.WindowsCE.Forms.LogFont lf = new Microsoft.WindowsCE.Forms.LogFont();
             lf.FaceName = this.Font.Name;
-            
+
             lf.Height = (int)(0.3 * dpi);
             lf.Quality = Microsoft.WindowsCE.Forms.LogFontQuality.AntiAliased;
             lvDevices.Font = Font.FromLogFont(lf);*/
@@ -520,7 +520,7 @@ namespace InTheHand.Windows.Forms
             get { return info; }
             set { info = value; }
         }
-#if WinXP
+#if (WinXP || WIN7)
 
 
         bool InTheHand.Windows.Forms.ISelectBluetoothDevice.AddNewDeviceWizard

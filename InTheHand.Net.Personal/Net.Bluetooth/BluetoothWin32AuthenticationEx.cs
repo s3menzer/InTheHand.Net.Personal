@@ -1,11 +1,11 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.BLUETOOTH_AUTHENTICATE_RESPONSE
-// 
+//
 // Copyright (c) 2003-2010 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
-#if WinXP
+#if (WinXP || WIN7)
 using System;
 using System.Runtime.InteropServices;
 using InTheHand.Net.Sockets;
@@ -62,7 +62,7 @@ namespace InTheHand.Net.Bluetooth
     {
         internal Int64 bthAddressRemote; //BLUETOOTH_ADDRESS bthAddressRemote;
         internal BLUETOOTH_AUTHENTICATION_METHOD authMethod;
-        
+
         //union{
         //    BLUETOOTH_PIN_INFO pinInfo;
         //    BLUETOOTH_OOB_DATA_INFO oobInfo;
@@ -147,7 +147,7 @@ namespace InTheHand.Net.Bluetooth
     // These are so simple that well use one outer struct with a UInt32 which can be used by both methods
     //
     // /// <summary>
-    // /// The BLUETOOTH_NUMERIC_COMPARISON_INFO structure contains the numeric value used for authentication via numeric comparison. 
+    // /// The BLUETOOTH_NUMERIC_COMPARISON_INFO structure contains the numeric value used for authentication via numeric comparison.
     // /// </summary>
     // [StructLayout(LayoutKind.Sequential, Size = 4)]
     // internal struct BLUETOOTH_NUMERIC_COMPARISON_INFO

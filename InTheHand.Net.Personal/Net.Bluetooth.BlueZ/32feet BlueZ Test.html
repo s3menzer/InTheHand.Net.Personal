@@ -705,7 +705,7 @@ Num factories: 1, Primary Factory: BlueZFactory</pre>
             We also get some HID and PnP/DeviceInfo attributes.</li>
         <li>The SPP struct seems only to work work in certain cases, so we use a different API
             to try and get the RFCOMM port number. But again in some cases neither APIs succeed
-            in fetching it. That's when querying Widcomm on WinXP at least...</li>
+            in fetching it. That's when querying Widcomm on (WinXP || WIN7) at least...</li>
     </ul>
     <h3 id="deviceInfo_GSR_general">
         General Records</h3>
@@ -868,7 +868,7 @@ Channel Num: 6
         </tr>
     </table>
     <p>
-        Note: That's the result against Widcomm on WinXP. Against MSFT on WinXP the port
+        Note: That's the result against Widcomm on (WinXP || WIN7). Against MSFT on (WinXP || WIN7) the port
         for the WapClient service is correctly got.
     </p>
     <!-- ==== -->

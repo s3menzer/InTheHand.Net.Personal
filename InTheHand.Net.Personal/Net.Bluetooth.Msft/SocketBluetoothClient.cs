@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.BluetoothClient
-// 
+//
 // Copyright (c) 2003-2008 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -32,9 +32,9 @@ namespace InTheHand.Net.Bluetooth.Msft
         readonly BluetoothFactory _fcty;
         private bool cleanedUp = false;
         private ISocketOptionHelper m_optionHelper;
-#if WinXP
-        // If SetPin(String) is called before connect we need to know the remote 
-        // address to start the BluetoothWin32Authenticator for, so store this 
+#if (WinXP || WIN7)
+        // If SetPin(String) is called before connect we need to know the remote
+        // address to start the BluetoothWin32Authenticator for, so store this
         // so we can start the authenticator at connect-time.
         string m_pinForConnect;
 #endif
@@ -69,7 +69,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             var bindEP = PrepareBindEndPoint(localEP);
             this.Client.Bind(bindEP);
         }
-        
+
         internal SocketBluetoothClient(BluetoothFactory fcty, Socket acceptedSocket)
         {
             Debug.Assert(fcty != null, "ArgNull");
@@ -110,7 +110,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         private int iac = BluetoothAddress.Giac; //0x9E8B33;
 #if NETCF
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int InquiryAccessCode
         {
@@ -176,17 +176,17 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <returns>An array of BluetoothDeviceInfo objects describing the devices discovered.</returns>
         /// -
         /// <remarks>
-        /// <para>The <see paramref="discoverableOnly"/> flag will discover only 
-        /// the devices that are in range and are in discoverable mode.  This works 
-        /// only on WM/CE with the Microsoft stack, or on any platform with the 
+        /// <para>The <see paramref="discoverableOnly"/> flag will discover only
+        /// the devices that are in range and are in discoverable mode.  This works
+        /// only on WM/CE with the Microsoft stack, or on any platform with the
         /// Widcomm stack.
         /// </para>
         /// <para>
-        /// It does not work on desktop Windows with the Microsoft 
-        /// stack, where the in range and remembered devices are returned already 
-        /// merged!  There simple all devices will be returned.  Even the 
+        /// It does not work on desktop Windows with the Microsoft
+        /// stack, where the in range and remembered devices are returned already
+        /// merged!  There simple all devices will be returned.  Even the
         /// <see cref="InTheHand.Net.Sockets.BluetoothDeviceInfo.LastSeen">BluetoothDeviceInfo.LastSeen</see>
-        /// property is of no use there: on XP and Vista at least the value provided 
+        /// property is of no use there: on XP and Vista at least the value provided
         /// is always simply the current time.
         /// </para>
         /// </remarks>
@@ -209,7 +209,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             // native event whilst we run a normal discovery.  We use the
             // native event to raise our live event and to gather the devices
             // to be included in the discoverableOnly result.
-            //   Note the event seems NOT be raised on WinXP in this case.
+            //   Note the event seems NOT be raised on (WinXP || WIN7) in this case.
             //   The event (on Win7 at least) raises lots of apparently duplicate
             // events, so we need to do some filtering for both results.
             var realLiveDiscoHandler = liveDiscoHandler;
@@ -280,7 +280,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 #if !NETCF
             Debug.Assert(liveDiscoHandler == null, "Don't use the NETCF live-disco feature on Win32!");
 #endif
-#if WinXP
+#if (WinXP || WIN7)
             const bool Win32DiscoverableOnlyIncludesAllDevices = false;
 #endif
             var prototype = new BluetoothEndPoint(BluetoothAddress.None, BluetoothService.Empty);
@@ -325,7 +325,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                         "{1}: {0}\r\n", name, DateTime.UtcNow.TimeOfDay);
             };
 
-#if WinXP
+#if (WinXP || WIN7)
             if (discoverableOnly && !Win32DiscoverableOnlyIncludesAllDevices) {
                 // No way to separate out the devices-in-range on Win32. :-(
                 return new IBluetoothDeviceInfo[0];
@@ -367,7 +367,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             //start looking for Bluetooth devices
             LookupFlags flags = LookupFlags.Containers;
 
-#if WinXP
+#if (WinXP || WIN7)
             //ensure cache is cleared on XP when looking for new devices
             if (unknown || discoverableOnly) {
                 flags |= LookupFlags.FlushCache;
@@ -400,7 +400,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
 
                     //status
-#if WinXP
+#if (WinXP || WIN7)
                     BTHNS_RESULT status = (BTHNS_RESULT)BitConverter.ToInt32(buffer, WqsOffset.dwOutputFlags_52);
                     bool devAuthd = ((status & BTHNS_RESULT.Authenticated) == BTHNS_RESULT.Authenticated);
                     bool devRembd = ((status & BTHNS_RESULT.Remembered) == BTHNS_RESULT.Remembered);
@@ -506,7 +506,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 );
         }
 
-#if WinXP
+#if (WinXP || WIN7)
         private void ReadBlobBTH_DEVICE_INFO(byte[] buffer, IBluetoothDeviceInfo dev)
         {
             // XXXX - Testing only, at least delete the "Console.WriteLine" before use. - XXXX
@@ -705,9 +705,9 @@ namespace InTheHand.Net.Bluetooth.Msft
         #region Begin Connect
         /// <summary>
         /// Begins an asynchronous request for a remote host connection.
-        /// The remote host is specified by a <see cref="BluetoothEndPoint"/>. 
+        /// The remote host is specified by a <see cref="BluetoothEndPoint"/>.
         /// </summary>
-        /// <param name="remoteEP">A <see cref="BluetoothEndPoint"/> containing the 
+        /// <param name="remoteEP">A <see cref="BluetoothEndPoint"/> containing the
         /// address and UUID of the remote service.</param>
         /// <param name="requestCallback">An AsyncCallback delegate that references the method to invoke when the operation is complete.</param>
         /// <param name="state">A user-defined object that contains information about the connect operation.
@@ -726,7 +726,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <summary>
         /// Asynchronously accepts an incoming connection attempt.
         /// </summary>
-        /// <param name="asyncResult">An <see cref="IAsyncResult"/> object returned by a call to 
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> object returned by a call to
         /// <see cref="M:BeginConnect(InTheHand.Net.Sockets.BluetoothEndPoint,System.AsyncCallback,System.Object)"/>
         /// / <see cref="M:BeginConnect(InTheHand.Net.Sockets.BluetoothAddress,System.Guid,System.AsyncCallback,System.Object)"/>.
         /// </param>
@@ -889,7 +889,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         public void SetPin(string pin)
         {
             if (!Connected) {
-#if WinXP
+#if (WinXP || WIN7)
                 m_pinForConnect = pin;
 #else
                 SetPin(null, pin);
@@ -920,7 +920,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         private void Connect_StartAuthenticator(BluetoothEndPoint remoteEP)
         {
-#if WinXP
+#if (WinXP || WIN7)
             if (m_pinForConnect != null) {
                 SetPin(remoteEP.Address, m_pinForConnect);
             }
@@ -929,7 +929,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         private void Connect_StopAuthenticator()
         {
-#if WinXP
+#if (WinXP || WIN7)
             if (m_pinForConnect != null) {
                 SetPin(null, null);
             }
@@ -967,7 +967,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <returns>Friendly name of specified device.</returns>
         public string GetRemoteMachineName(BluetoothAddress a)
         {
-#if WinXP
+#if (WinXP || WIN7)
             var bdi = _fcty.DoGetBluetoothDeviceInfo(a);
             return bdi.DeviceName;
 #else
@@ -980,7 +980,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                 clientSocket.SetSocketOption(BluetoothSocketOptionLevel.RFComm, BluetoothSocketOptionName.ReadRemoteName, buffer);
 				string name = string.Empty;
                 name = System.Text.Encoding.Unicode.GetString(buffer, 8, 496);
-				
+
 				int offset = name.IndexOf('\0');
 				if(offset > -1)
 				{
@@ -1004,7 +1004,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <returns>Returns a string value of the computer or device name.</returns>
         public static string GetRemoteMachineName(Socket s)
         {
-#if WinXP
+#if (WinXP || WIN7)
             // HACK was new WindowsBluetoothDeviceInfo
             var bdi = new BluetoothDeviceInfo(((BluetoothEndPoint)s.RemoteEndPoint).Address);
             return bdi.DeviceName;
@@ -1019,7 +1019,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 			{
                 s.SetSocketOption(BluetoothSocketOptionLevel.RFComm, BluetoothSocketOptionName.ReadRemoteName, buffer);
 				name = System.Text.Encoding.Unicode.GetString(buffer, 8, 496);
-				
+
 				int offset = name.IndexOf('\0');
 				if(offset > -1)
 				{
@@ -1189,7 +1189,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             #region Set Pin
             public void SetPin(BluetoothAddress device, string pin)
             {
-#if WinXP
+#if (WinXP || WIN7)
                 if (pin != null) {
                     m_authenticator = new BluetoothWin32Authentication(device, pin);
                 } else {

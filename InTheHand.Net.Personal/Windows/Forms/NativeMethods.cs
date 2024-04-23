@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Windows.Forms.NativeMethods
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the Microsoft Public License (Ms-PL) - see License.txt
 
@@ -14,7 +14,7 @@ using InTheHand.Net.Bluetooth;
 
 #endregion
 
-#if WinXP
+#if (WinXP || WIN7)
 
 namespace InTheHand.Windows.Forms
 {

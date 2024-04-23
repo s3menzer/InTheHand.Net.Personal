@@ -1,12 +1,12 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Windows.Forms.SelectBluetoothDeviceDialog
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the Microsoft Public License (Ms-PL) - see License.txt
 
 #if ! NO_WINFORMS
-#if WinXP
+#if (WinXP || WIN7)
 using CommonDialog_or_Component = System.Windows.Forms.CommonDialog;
 #else
 using CommonDialog_or_Component = System.ComponentModel.Component;
@@ -31,7 +31,7 @@ namespace InTheHand.Windows.Forms
         internal delegate bool PFN_DEVICE_CALLBACK(IntPtr pvParam, ref BLUETOOTH_DEVICE_INFO pDevice);
         #endregion
 
-#if WinXP
+#if (WinXP || WIN7)
         private BLUETOOTH_SELECT_DEVICE_PARAMS dialogWin32;
 #endif
         private readonly SelectBluetoothDeviceForm dialogCustom;
@@ -55,7 +55,7 @@ namespace InTheHand.Windows.Forms
 #if NETCF
             InTheHand.Net.PlatformVerification.ThrowException();
 #endif
-#if ! WinXP
+#if ! (WinXP || WIN7)
             // Always the custom dialog on WM/CE.
             forceCustomDialog = true;
             _msftFilterProxy = null;
@@ -65,7 +65,7 @@ namespace InTheHand.Windows.Forms
                 dialogCustom = new SelectBluetoothDeviceForm();
                 dialog = dialogCustom;
             } else {
-#if WinXP
+#if (WinXP || WIN7)
                 _msftFilterProxy = MsftFilterProxy;
                 dialogWin32 = new BLUETOOTH_SELECT_DEVICE_PARAMS();
                 dialogWin32.Reset();
@@ -82,7 +82,7 @@ namespace InTheHand.Windows.Forms
         /// <summary>
         /// Resets the properties of the <see cref="SelectBluetoothDeviceDialog"/> to their default values.
         /// </summary>
-#if WinXP
+#if (WinXP || WIN7)
         public override void Reset()
 #else
         public void Reset()
@@ -98,7 +98,7 @@ namespace InTheHand.Windows.Forms
 		/// </summary>
         /// -
         /// <returns><see cref="F:System.Windows.Forms.DialogResult.OK">DialogResult.OK</see>
-        /// if the user clicks OK in the dialog box; otherwise, 
+        /// if the user clicks OK in the dialog box; otherwise,
         /// <see cref="F:System.Windows.Forms.DialogResult.Cancel">DialogResult.Cancel</see>.
         /// </returns>
 		public DialogResult ShowDialog()
@@ -108,7 +108,7 @@ namespace InTheHand.Windows.Forms
 #endif
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         DialogResult ShowCustomDialog()
@@ -400,17 +400,17 @@ namespace InTheHand.Windows.Forms
         /// </value>
         /// -
         /// <remarks>
-        /// <para>The callback method is called for each device as it is 
-        /// being added to the dialog box.  If the function returns <c>false</c> it 
-        /// won't be added, otherwise it will be added and displayed. The 
+        /// <para>The callback method is called for each device as it is
+        /// being added to the dialog box.  If the function returns <c>false</c> it
+        /// won't be added, otherwise it will be added and displayed. The
         /// information about each device is provided as a <see cref="T:InTheHand.Net.Sockets.BluetoothDeviceInfo"/>
-        /// instance which will contain all the information about the device 
-        /// that the discovery process knows and will also include any 
-        /// information from the remembered/authenticated/paired devices. 
-        /// Note that prior to Bluetooth v2.1 a separate query has to be 
-        /// carried out to find whether the device also has a name, so unless 
-        /// both devices are v2.1 or later then it&apos;s likely that the 
-        /// name won't be included in the first discovery. 
+        /// instance which will contain all the information about the device
+        /// that the discovery process knows and will also include any
+        /// information from the remembered/authenticated/paired devices.
+        /// Note that prior to Bluetooth v2.1 a separate query has to be
+        /// carried out to find whether the device also has a name, so unless
+        /// both devices are v2.1 or later then it&apos;s likely that the
+        /// name won't be included in the first discovery.
         /// <see href="http://32feet.codeplex.com/wikipage?title=DeviceName%20and%20Discovery"/>
         /// </para>
         /// </remarks>
@@ -420,7 +420,7 @@ namespace InTheHand.Windows.Forms
         ///     Dim dlg As New InTheHand.Windows.Forms.SelectBluetoothDeviceDialog()
         ///     dlg.DeviceFilter = AddressOf FilterDevice
         ///     Dim rslt As DialogResult = dlg.ShowDialog()
-        ///     '...... 
+        ///     '......
         ///
         /// Shared Function FilterDevice(ByVal dev As BluetoothDeviceInfo) As Boolean
         ///     Dim rslt As DialogResult = MessageBox.Show("Include this device " &amp; dev.DeviceAddress.ToString &amp; " " &amp; dev.DeviceName, "FilterDevice", MessageBoxButtons.YesNo)

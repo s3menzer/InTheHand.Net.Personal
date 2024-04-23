@@ -4,13 +4,13 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 //
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
 [assembly: AssemblyTitle("InTheHand.Net.Personal")]
 [assembly: AssemblyDescription("Personal Area Networking for .NET\r\n(" +
-#if WinXP
+#if (WinXP || WIN7)
  ".NET Framework"
 #elif WinCE
 ".NET Compact Framework"
@@ -46,11 +46,11 @@ using System.Runtime.InteropServices;
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
-//      Minor Version 
+//      Minor Version
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
 [assembly: AssemblyVersion("3.7.1102.0")]
@@ -58,7 +58,7 @@ using System.Runtime.InteropServices;
 [assembly: System.CLSCompliant(true)]
 [assembly: System.Resources.NeutralResourcesLanguage("en-US")]
 
-#if WinXP
+#if (WinXP || WIN7)
 [assembly: ComVisible(false)]
 #endif
 
@@ -66,7 +66,7 @@ using System.Runtime.InteropServices;
 #if !DEBUG && !CODE_ANALYSIS && !NO_SIGNING
 [assembly: AssemblyDelaySign(false)]
 #pragma warning disable 1699
-[assembly: AssemblyKeyFile(@"..\..\..\InTheHand.Net.Personal\d-m-wilson.ITH.snk")]
+//[assembly: AssemblyKeyFile(@"..\..\..\InTheHand.Net.Personal\InTheHand.snk")]
 #pragma warning restore 1699
 [assembly: AssemblyKeyName("")]
 #endif

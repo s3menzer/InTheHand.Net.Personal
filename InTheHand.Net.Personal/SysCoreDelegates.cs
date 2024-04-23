@@ -1,7 +1,7 @@
 ﻿// 32feet.NET - Personal Area Networking for .NET
 //
 // Copy of NET 3.5's System.Core general delegates for use when compiling for FX2.
-// 
+//
 // Copyright (c) 2010 Alan J McFarlane, All rights reserved.
 // Copyright (c) 2010 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -13,7 +13,7 @@
 // Can remove all of these when we move the library to be a FX3.5 assembly.
 namespace InTheHand.SystemCore
 {
-#if !FX3_5
+#if !FX3_5 && !FX4
     internal delegate void Action();
     internal delegate void Action<T1, T2>(T1 arg1, T2 arg2);
     internal delegate void Action<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3);

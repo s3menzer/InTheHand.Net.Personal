@@ -1,7 +1,7 @@
 ﻿// 32feet.NET - Personal Area Networking for .NET
 //
 // Net.Bluetooth.StonestreetOne.BluetopiaRfcommStream
-// 
+//
 // Copyright (c) 2010-2011 Alan J.McFarlane, All rights reserved.
 // Copyright (c) 2010-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -78,7 +78,7 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
         protected override void DoPortClose(bool disposing)
         {
             // We have the event handle now run all our code on a threadpool
-            // thread so there can't be any deadlock, but leave this 
+            // thread so there can't be any deadlock, but leave this
             //    // We saw an apparent deadlock
             //    // ThreadB: BTPS->HandleSpp_Event_Callback->HandleCONNECT_ERR -> Monitor.Enter
             //    // ThreadA: MeThreadPool->...
@@ -98,13 +98,13 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
                     // So *need* to close the latter case so will get a SUCCESS then.
                     Debug.Assert(ret == BluetopiaError.INVALID_PARAMETER, "INFO: SPP_Close_Port expecting IP (state: " + m_state_ + ")");
                 } else if (m_state_ == State.Closed) {
-                    // Likely the Finalizer thread called us at the same time 
-                    // as an app thread did, so there's a race on accessing/overwriting 
+                    // Likely the Finalizer thread called us at the same time
+                    // as an app thread did, so there's a race on accessing/overwriting
                     // _hPortClient.  Just spat the error.
-                    // Ideally we'd solve  the race by Interlock.Exchang-ing 
-                    // _hPortClient or by locking.  But closing twice is not 
+                    // Ideally we'd solve  the race by Interlock.Exchang-ing
+                    // _hPortClient or by locking.  But closing twice is not
                     // really a problem.
-                    Debug.Assert(ret == BluetopiaError.RFCOMM_INVALID_DLCI, "INFO: SPP_Close_Port expecting RID (state: " + m_state_ + ")");
+                    //Debug.Assert(ret == BluetopiaError.RFCOMM_INVALID_DLCI, "INFO: SPP_Close_Port expecting RID (state: " + m_state_ + ")");
                     /*
                         The thread 0x85ac1746 has exited with code 0 (0x0).
                         The thread 0x85ac1746 has exited with code 0 (0x0).
@@ -128,10 +128,10 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
                     // So *need* to close the latter case so will get a SUCCESS then.
                     Debug.Assert(ret == BluetopiaError.INVALID_PARAMETER, "SPP_Close_Server_Port expecting IP  (state: " + m_state_ + ")");
                 } else if (m_state_ == State.Closed) {
-                    // Likely the Finalizer thread called us at the same time 
-                    // as an app thread did, so there's a race on accessing/overwriting 
+                    // Likely the Finalizer thread called us at the same time
+                    // as an app thread did, so there's a race on accessing/overwriting
                     // _hPortClient.  Just splat the assert.  See above.
-                    Debug.Assert(ret == BluetopiaError.RFCOMM_INVALID_DLCI, "INFO: SPP_Close_Server_Port expecting RID (state: " + m_state_ + ")");
+                   // Debug.Assert(ret == BluetopiaError.RFCOMM_INVALID_DLCI, "INFO: SPP_Close_Server_Port expecting RID (state: " + m_state_ + ")");
                 } else {
                     BluetopiaUtils.Assert(ret, "SPP_Close_Server_Port expecting OK (state: " + m_state_ + ")");
                 }
@@ -162,7 +162,7 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
             for (i = 0; i < 5 && ret == BluetopiaError.RFCOMM_UNABLE_TO_CONNECT_TO_REMOTE_DEVICE; ++i) {
                 // Sometimes see this error here, my guess is that the baseband
                 // connection used by the SDP Query is closing right when as we
-                // wanted to connect, so we fail to initiate the connect.  In 
+                // wanted to connect, so we fail to initiate the connect.  In
                 // the debugger when we retry it succeeds, so retry.
                 if (i > 0) Thread.Sleep(100); // Try right away, then after 100ms sleeps
                 hConn = _fcty.Api.SPP_Open_Remote_Port(_fcty.StackId, addrX, (uint)scn,

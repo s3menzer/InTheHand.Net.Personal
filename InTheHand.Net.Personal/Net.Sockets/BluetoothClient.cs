@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Sockets.BluetoothClient
-// 
+//
 // Copyright (c) 2003-2008 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -28,23 +28,23 @@ namespace InTheHand.Net.Sockets
     /// Provides client connections for Bluetooth RFCOMM network services.
     /// </summary>
     /// <remarks>
-    /// <note>This class currently only supports devices which use the Microsoft 
-    /// and Widcomm Bluetooth stacks, devices which use the other stacks will 
+    /// <note>This class currently only supports devices which use the Microsoft
+    /// and Widcomm Bluetooth stacks, devices which use the other stacks will
     /// not work.
     /// </note>
     /// <!--This para is in both the class remarks and in Connect(BtEndPoint)-->
     /// <para>When connecting
-    /// normally an endpoint with an Address and a Service Class Id 
-    /// is specified, then the system will automatically lookup the SDP 
-    /// record on the remote device for that service class and connect to 
+    /// normally an endpoint with an Address and a Service Class Id
+    /// is specified, then the system will automatically lookup the SDP
+    /// record on the remote device for that service class and connect to
     /// the port number (RFCOMM Channel Number) specified there.
-    /// If instead a port value is provided in the endpoint then the SDP 
-    /// lookup will be skipped and  the system will connect to the specified 
+    /// If instead a port value is provided in the endpoint then the SDP
+    /// lookup will be skipped and  the system will connect to the specified
     /// port directly.
     /// </para>
     /// <para>Note: Do not attempt to connect with service
     /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.RFCommProtocol">BluetoothService.RFCommProtocol</see>
-    /// this class always uses RFCOMM, instead the Service Class Id of the 
+    /// this class always uses RFCOMM, instead the Service Class Id of the
     /// particular service to which you want to connect must be specified,
     /// perhaps
     /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.SerialPort">BluetoothService.SerialPort</see>,
@@ -131,7 +131,7 @@ namespace InTheHand.Net.Sockets
         /// </para>
         /// <para>The default value is
         /// <see cref="F:InTheHand.Net.BluetoothAddress.Giac">GIAC</see> (0x9E8B33).
-        /// See also constant 
+        /// See also constant
         /// <see cref="F:InTheHand.Net.BluetoothAddress.Liac">LIAC</see> (0x9E8B00).
         /// The valid range is 0x9E8B00 through 0x9E8B3f.
         /// </para>
@@ -230,8 +230,8 @@ namespace InTheHand.Net.Sockets
         /// </summary>
         /// -
         /// <remarks>
-        /// <para>The <paramref name="discoverableOnly"/> parameter is not supported 
-        /// on the Microsoft stack on WinXP as the stack there returns the remembered and Device-Inquiry-results already 
+        /// <para>The <paramref name="discoverableOnly"/> parameter is not supported
+        /// on the Microsoft stack on (WinXP || WIN7) as the stack there returns the remembered and Device-Inquiry-results already
         /// merged, it is however supported on Windows 7.
         /// It is supported on WM/CE and on Widcomm (both platforms).
         /// Note when that flag is set the other related flag values are ignored.
@@ -247,7 +247,7 @@ namespace InTheHand.Net.Sockets
         /// <param name="authenticated">True to return previously authenticated/paired devices.</param>
         /// <param name="remembered">True to return remembered devices.</param>
         /// <param name="unknown">True to return previously unknown devices.</param>
-        /// <param name="discoverableOnly">True to return only the devices that 
+        /// <param name="discoverableOnly">True to return only the devices that
         /// are in range, and in discoverable mode.  See the remarks section.</param>
         /// -
         /// <returns>An array of BluetoothDeviceInfo objects describing the devices discovered.</returns>
@@ -289,14 +289,14 @@ namespace InTheHand.Net.Sockets
         /// </param>
         /// <param name="discoverableOnly">See <see cref="M:InTheHand.Net.Sockets.BluetoothClient.DiscoverDevices(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)"/>.
         /// </param>
-        /// <param name="callback">An optional asynchronous callback, to be called 
+        /// <param name="callback">An optional asynchronous callback, to be called
         /// when the discovery is complete.
         /// </param>
-        /// <param name="state">A user-provided object that distinguishes this 
+        /// <param name="state">A user-provided object that distinguishes this
         /// particular asynchronous discovery request from other requests.
         /// </param>
         /// -
-        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the 
+        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the
         /// asynchronous discovery, which could still be pending.
         /// </returns>
         [DebuggerStepThrough]
@@ -393,18 +393,18 @@ namespace InTheHand.Net.Sockets
         /// -
         /// <remarks>
         /// <!--This para is in both the class remarks and in Connect(BtEndPoint)-->
-        /// <para>Normally an endpoint with an Address and a Service Class Id 
-        /// is specified, then the system will automatically lookup the SDP 
-        /// record on the remote device for that service class and connect to 
+        /// <para>Normally an endpoint with an Address and a Service Class Id
+        /// is specified, then the system will automatically lookup the SDP
+        /// record on the remote device for that service class and connect to
         /// the port number (RFCOMM Channel Number) specified there.
-        /// If instead a port value is provided in the endpoint then the SDP 
-        /// lookup will be skipped and  the system will connect to the specified 
+        /// If instead a port value is provided in the endpoint then the SDP
+        /// lookup will be skipped and  the system will connect to the specified
         /// port directly.
         /// </para>
         /// <para>Note: Do not attempt to connect with service
         /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.RFCommProtocol">BluetoothService.RFCommProtocol</see>.
         /// See the <see cref="T:InTheHand.Net.Sockets.BluetoothClient">class</see> remarks for more information.
-        /// </para> 
+        /// </para>
         /// </remarks>
         public void Connect(BluetoothEndPoint remoteEP)
         {
@@ -414,25 +414,25 @@ namespace InTheHand.Net.Sockets
             m_impl.Connect(remoteEP);
         }
         /// <summary>
-        /// Connects the client to a remote Bluetooth host using the specified Bluetooth address and service identifier. 
+        /// Connects the client to a remote Bluetooth host using the specified Bluetooth address and service identifier.
         /// </summary>
         /// -
         /// <remarks>
         /// <!--This para is in both the class remarks and in Connect(BtEndPoint)-->
-        /// <para>The system will automatically lookup the SDP 
-        /// record on the remote device for that service class and connect to 
+        /// <para>The system will automatically lookup the SDP
+        /// record on the remote device for that service class and connect to
         /// the port number (RFCOMM Channel Number) specified there.
         /// </para>
         /// <para>Note: Do not attempt to connect with service
         /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.RFCommProtocol">BluetoothService.RFCommProtocol</see>.
         /// See the <see cref="T:InTheHand.Net.Sockets.BluetoothClient">class</see> remarks for more information.
-        /// </para> 
+        /// </para>
         /// </remarks>
         /// -
         /// <param name="address">The <see cref="BluetoothAddress"/> of the remote host.
         /// </param>
         /// <param name="service">The Service Class Id of the service on the remote host.
-        /// The standard Bluetooth Service Classes are provided on class 
+        /// The standard Bluetooth Service Classes are provided on class
         /// <see cref="T:InTheHand.Net.Bluetooth.BluetoothService"/>.
         /// </param>
         public void Connect(BluetoothAddress address, Guid service)
@@ -450,7 +450,7 @@ namespace InTheHand.Net.Sockets
         #region Begin Connect
         /// <summary>
         /// Begins an asynchronous request for a remote host connection.
-        /// The remote host is specified by a <see cref="BluetoothAddress"/> and a service identifier (Guid). 
+        /// The remote host is specified by a <see cref="BluetoothAddress"/> and a service identifier (Guid).
         /// </summary>
         /// -
         /// <remarks>
@@ -462,18 +462,18 @@ namespace InTheHand.Net.Sockets
         /// <param name="address">The <see cref="BluetoothAddress"/> of the remote host.
         /// </param>
         /// <param name="service">The Service Class Id of the service on the remote host.
-        /// The standard Bluetooth Service Classes are provided on class 
+        /// The standard Bluetooth Service Classes are provided on class
         /// <see cref="T:InTheHand.Net.Bluetooth.BluetoothService"/>
         /// </param>
-        /// <param name="requestCallback">An <see cref="T:System.AsyncCallback"/> delegate that 
+        /// <param name="requestCallback">An <see cref="T:System.AsyncCallback"/> delegate that
         /// references the method to invoke when the operation is complete.
         /// </param>
-        /// <param name="state">A user-defined object that contains information 
-        /// about the connect operation. This object is passed to the <paramref name="requestCallback"/> 
+        /// <param name="state">A user-defined object that contains information
+        /// about the connect operation. This object is passed to the <paramref name="requestCallback"/>
         /// delegate when the operation is complete.
         /// </param>
         /// -
-        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the 
+        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the
         /// asynchronous connect, which could still be pending.
         /// </returns>
         public IAsyncResult BeginConnect(BluetoothAddress address, Guid service, AsyncCallback requestCallback, object state)
@@ -489,19 +489,19 @@ namespace InTheHand.Net.Sockets
 
         /// <summary>
         /// Begins an asynchronous request for a remote host connection.
-        /// The remote server is specified by a <see cref="BluetoothEndPoint"/>. 
+        /// The remote server is specified by a <see cref="BluetoothEndPoint"/>.
         /// </summary>
         /// -
-        /// <param name="remoteEP">A <see cref="BluetoothEndPoint"/> that 
+        /// <param name="remoteEP">A <see cref="BluetoothEndPoint"/> that
         /// represents the server on the remote device.
         /// See the <see cref="M:InTheHand.Net.Sockets.BluetoothClient.Connect(InTheHand.Net.BluetoothEndPoint)"/>
         /// method for information on the usage of the values in the endpoint.
         /// </param>
-        /// <param name="requestCallback">An <see cref="T:System.AsyncCallback"/> delegate that 
+        /// <param name="requestCallback">An <see cref="T:System.AsyncCallback"/> delegate that
         /// references the method to invoke when the operation is complete.
         /// </param>
-        /// <param name="state">A user-defined object that contains information 
-        /// about the connect operation. This object is passed to the <paramref name="requestCallback"/> 
+        /// <param name="state">A user-defined object that contains information
+        /// about the connect operation. This object is passed to the <paramref name="requestCallback"/>
         /// delegate when the operation is complete.
         /// </param>
         /// -
@@ -511,7 +511,7 @@ namespace InTheHand.Net.Sockets
         /// </para>
         /// </remarks>
         /// -
-        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the 
+        /// <returns>An <see cref="T:System.IAsyncResult"/> that represents the
         /// asynchronous connect, which could still be pending.
         /// </returns>
         public IAsyncResult BeginConnect(BluetoothEndPoint remoteEP, AsyncCallback requestCallback, object state)
@@ -527,7 +527,7 @@ namespace InTheHand.Net.Sockets
         /// <summary>
         /// Asynchronously accepts an incoming connection attempt.
         /// </summary>
-        /// <param name="asyncResult">An <see cref="IAsyncResult"/> object returned by a call to 
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> object returned by a call to
         /// <see cref="M:InTheHand.Net.Sockets.BluetoothClient.BeginConnect(InTheHand.Net.BluetoothEndPoint,System.AsyncCallback,System.Object)"/>
         /// / <see cref="M:InTheHand.Net.Sockets.BluetoothClient.BeginConnect(InTheHand.Net.BluetoothAddress,System.Guid,System.AsyncCallback,System.Object)"/>.
         /// </param>
@@ -566,14 +566,14 @@ namespace InTheHand.Net.Sockets
         /// Closes the <see cref="BluetoothClient"/> and the underlying connection.
         /// </summary>
         /// -
-        /// <remarks>The two XxxxxClient classes produced by Microsoft (TcpClient, 
+        /// <remarks>The two XxxxxClient classes produced by Microsoft (TcpClient,
         /// and IrDAClient in the NETCF) have had various documented behaviours and various
         /// actual behaviours for close/dispose/finalize on the various platforms. :-(
-        /// The current TcpClient implementation on is that 
+        /// The current TcpClient implementation on is that
         /// Close/Dispose closes the connection by closing the underlying socket and/or
         /// NetworkStream, and finalization doesn't close either.  This is the behaviour
         /// we use for the here (for <see cref="T:InTheHand.Net.Sockets.BluetoothClient"/>,
-        /// <see cref="T:InTheHand.Net.Sockets.IrDAClient"/>).  (The documentation in MSDN for 
+        /// <see cref="T:InTheHand.Net.Sockets.IrDAClient"/>).  (The documentation in MSDN for
         /// <see cref="T:System.Net.Sockets.TcpClient"/> is still wrong by-the-way,
         /// see <see href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=158480">
         /// Microsoft feedback #158480</see>).
@@ -622,7 +622,7 @@ namespace InTheHand.Net.Sockets
 
         #region LingerState
         /// <summary>
-        /// Gets or sets a value that specifies whether the client will delay closing 
+        /// Gets or sets a value that specifies whether the client will delay closing
         /// in an attempt to send all pending data.
         /// </summary>
         /// -
@@ -633,7 +633,7 @@ namespace InTheHand.Net.Sockets
         /// </para>
         /// </remarks>
         /// -
-        /// <value>A <see cref="T:System.Net.Sockets.LingerOption"/> that specifies 
+        /// <value>A <see cref="T:System.Net.Sockets.LingerOption"/> that specifies
         /// how to linger while closing a socket.
         /// </value>
         public System.Net.Sockets.LingerOption LingerState
@@ -728,7 +728,7 @@ namespace InTheHand.Net.Sockets
         /// <param name="pin">PIN which must be composed of 1 to 16 ASCII characters.</param>
         /// <remarks>
         /// <para>Is not supported on all platforms.
-        /// For instance see the Widcomm documentation 
+        /// For instance see the Widcomm documentation
         /// </para>
         /// <para>Assigning null (Nothing in VB) or an empty String will revoke the PIN.
         /// </para>
@@ -748,7 +748,7 @@ namespace InTheHand.Net.Sockets
         /// <param name="pin">PIN string consisting of 1 to 16 ASCII characters.</param>
         /// <remarks>
         /// <para>Is not supported on all platforms.
-        /// For instance see the Widcomm documentation 
+        /// For instance see the Widcomm documentation
         /// </para>
         /// <para>Assigning null (Nothing in VB) or an empty String will revoke the PIN.
         /// </para>
@@ -767,7 +767,7 @@ namespace InTheHand.Net.Sockets
         /// </summary>
         /// -
         /// <value>
-        /// The <see cref="T:InTheHand.Net.BluetoothEndPoint"/> with which the 
+        /// The <see cref="T:InTheHand.Net.BluetoothEndPoint"/> with which the
         /// <see cref="T:InTheHand.Net.Sockets.BluetoothClient"/> is communicating.
         /// </value>
         /// -
@@ -902,7 +902,7 @@ namespace InTheHand.Net.Sockets
                 int idx = BluetoothDeviceInfo.ListIndexOf(merged, cur);
                 if (idx != -1) {
                     // The device is both in the inquiry result and the remembered list.
-                    // Does the called want "already known" devices?  If so, update 
+                    // Does the called want "already known" devices?  If so, update
                     // to the correct flags, otherwise remove it.
                     Debug.Assert(debug_contains);
                     if (addFromKnown_General || discoverableOnly) {

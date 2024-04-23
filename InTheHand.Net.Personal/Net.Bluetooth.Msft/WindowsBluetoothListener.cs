@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.WindowsBluetoothListener
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -82,13 +82,13 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// for details on the use and format of SDP records.
         /// </para><para>
         /// If a SDP record with more elements is required, then use
-        /// one of the other constructors that takes an SDP record e.g. 
+        /// one of the other constructors that takes an SDP record e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(System.Guid,InTheHand.Net.Bluetooth.ServiceRecord)"/>,
-        /// or when passing it as a byte array 
+        /// or when passing it as a byte array
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(System.Guid,System.Byte[],System.Int32)"/>.
         /// The format of the generic record used here is shown there also.
         /// </para><para>
-        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/> 
+        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>
         /// method to begin listening for incoming connection attempts.
         /// </para>
         /// </remarks>
@@ -99,10 +99,10 @@ namespace InTheHand.Net.Bluetooth.Msft
             serverSocket = CreateSocket();
             m_optionHelper = CreateSocketOptionHelper(serverSocket);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsBluetoothListener"/> class
-        /// that listens for incoming connection attempts on the specified local Bluetooth address and service identifier. 
+        /// that listens for incoming connection attempts on the specified local Bluetooth address and service identifier.
         /// </summary>
         /// <param name="localAddress">A <see cref="BluetoothAddress"/> that represents the local Bluetooth radio address.</param>
         /// <param name="service">The Bluetooth service on which to listen for incoming connection attempts.</param>
@@ -117,13 +117,13 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// for details on the use and format of SDP records.
         /// </para><para>
         /// If a SDP record with more elements is required, then use
-        /// one of the other constructors that takes an SDP record e.g. 
+        /// one of the other constructors that takes an SDP record e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothAddress,System.Guid,InTheHand.Net.Bluetooth.ServiceRecord)"/>,
-        /// or when passing it as a byte array, e.g. 
+        /// or when passing it as a byte array, e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothAddress,System.Guid,System.Byte[],System.Int32)"/>.
         /// The format of the generic record used here is shown there also.
         /// </para><para>
-        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/> 
+        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>
         /// method to begin listening for incoming connection attempts.
         /// </para>
         /// </remarks>
@@ -141,7 +141,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             serverSocket = CreateSocket();
             m_optionHelper = CreateSocketOptionHelper(serverSocket);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsBluetoothListener"/> class
         /// with the specified local endpoint.
@@ -158,13 +158,13 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// for details on the use and format of SDP records.
         /// </para><para>
         /// If a SDP record with more elements is required, then use
-        /// one of the other constructors that takes an SDP record e.g. 
+        /// one of the other constructors that takes an SDP record e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothEndPoint,InTheHand.Net.Bluetooth.ServiceRecord)"/>,
         /// or when passing it as a byte array
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothEndPoint,System.Byte[],System.Int32)"/>.
         /// The format of the generic record used here is shown there also.
         /// </para><para>
-        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/> 
+        /// Call the <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>
         /// method to begin listening for incoming connection attempts.
         /// </para>
         /// </remarks>
@@ -181,10 +181,10 @@ namespace InTheHand.Net.Bluetooth.Msft
             m_optionHelper = CreateSocketOptionHelper(serverSocket);
         }
         //----------------
-        
+
         /// <summary>
 		/// Initializes a new instance of the <see cref="WindowsBluetoothListener"/> class
-        /// to listen on the specified service identifier, 
+        /// to listen on the specified service identifier,
         /// publishing the specified SDP record.
         /// </summary>
 		/// <param name="service">The Bluetooth service to listen for.</param>
@@ -200,8 +200,8 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly (as a byte array) should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(System.Guid)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
@@ -211,12 +211,12 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// passed to the respective constuctor, e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(System.Guid,InTheHand.Net.Bluetooth.ServiceRecord)"/>
         /// </para>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
@@ -224,7 +224,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// of the respective byte in the <paramref name="sdpRecord"/> byte array.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code>
@@ -266,7 +266,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             Construct(service);
             InitServiceRecord(sdpRecord, channelOffset);
 		}
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsBluetoothListener"/> class
         /// that listens for incoming connection attempts on the specified local Bluetooth address and service identifier,
@@ -286,8 +286,8 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly (as a byte array) should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothAddress,System.Guid)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
@@ -297,12 +297,12 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// passed to the respective constuctor, e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothAddress,System.Guid,InTheHand.Net.Bluetooth.ServiceRecord)"/>
         /// </para>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
@@ -310,7 +310,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// of the respective byte in the <paramref name="sdpRecord"/> byte array.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code>
@@ -371,8 +371,8 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly (as a byte array) should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothEndPoint)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
@@ -382,12 +382,12 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// passed to the respective constuctor, e.g.
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothEndPoint,InTheHand.Net.Bluetooth.ServiceRecord)"/>
         /// </para>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
@@ -395,7 +395,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// of the respective byte in the <paramref name="sdpRecord"/> byte array.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code>
@@ -441,7 +441,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsBluetoothListener"/> class
-        /// to listen on the specified service identifier, 
+        /// to listen on the specified service identifier,
         /// publishing the specified SDP record.
         /// </summary>
         /// -
@@ -453,24 +453,24 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(System.Guid)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
         /// published.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code lang="C#">
@@ -512,24 +512,24 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothAddress,System.Guid)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
         /// published.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code lang="C#">
@@ -569,24 +569,24 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// The constructors taking the SDP record explicitly (as a byte array) should
         /// only be used if
         /// a specialized SDP record is required. For instance when using one of the
-        /// standard profiles.  Otherwise use one of the other constructors 
-        /// e.g. <see 
+        /// standard profiles.  Otherwise use one of the other constructors
+        /// e.g. <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.#ctor(InTheHand.Net.BluetoothEndPoint)"/>
         /// which create a generic SDP Record from the specified service identifier.
         /// </note>
-        /// <para>Any useful SDP record will include 
+        /// <para>Any useful SDP record will include
         /// a <c>ProtocolDescriptor</c> element containing
         /// the RFCOMM Channel number that the server is listening on,
         /// and a <c>ServiceClassId</c> element containing the service UUIDs.
         /// The record supplied in the <paramref name="sdpRecord"/> parameter
-        /// should contain those elements.  On successful <see 
+        /// should contain those elements.  On successful <see
         /// cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>,
         /// the RFCOMM Channel number that the protocol stack has assigned to the
         /// server is retrieved, and copied into the service record before it is
         /// published.
         /// </para>
         /// <para>
-        /// An example SDP record is as follows.  This is actually the format of the 
+        /// An example SDP record is as follows.  This is actually the format of the
         /// generic record used in the other constructors.  For another example see
         /// the code in the <c>ObexListener</c> class.
         /// <code lang="C#">
@@ -616,7 +616,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         #region Local EndPoint
         /// <summary>
-		///  Gets the underlying <see cref="BluetoothEndPoint"/> of the current <see cref="WindowsBluetoothListener"/>.  
+		///  Gets the underlying <see cref="BluetoothEndPoint"/> of the current <see cref="WindowsBluetoothListener"/>.
 		/// </summary>
 		public BluetoothEndPoint LocalEndPoint
 		{
@@ -634,25 +634,25 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         #region Service Class
         /// <summary>
-        /// Get or set the Service Class flags that this service adds to the host 
+        /// Get or set the Service Class flags that this service adds to the host
         /// device&#x2019;s Class Of Device field.
         /// </summary>
         /// -
         /// <remarks>
-        /// <para>The Class of Device value contains a Device part which describes 
-        /// the primary service that the device provides, and a Service part which 
-        /// is a set of flags indicating all the service types that the device supports, 
+        /// <para>The Class of Device value contains a Device part which describes
+        /// the primary service that the device provides, and a Service part which
+        /// is a set of flags indicating all the service types that the device supports,
         /// e.g. <see cref="F:InTheHand.Net.Bluetooth.ServiceClass.ObjectTransfer"/>,
         /// <see cref="F:InTheHand.Net.Bluetooth.ServiceClass.Telephony"/>,
         /// <see cref="F:InTheHand.Net.Bluetooth.ServiceClass.Audio"/> etc.
-        /// This property supports setting those flags; bits set in this value will be 
+        /// This property supports setting those flags; bits set in this value will be
         /// added to the host device&#x2019;s CoD Service Class bits when the listener
         /// is active.
         /// </para>
-        /// <para><note>Supported on Win32, but not supported on WindowsMobile/WinCE 
+        /// <para><note>Supported on Win32, but not supported on WindowsMobile/WinCE
         /// as there's no native API for it.  The WindowCE section of MSDN mentions the
-        /// Registry value <c>COD</c> at key <c>HKEY_LOCAL_MACHINE\Software\Microsoft\Bluetooth\sys</c>. 
-        /// However my (Jam) has value 0x920100 there but advertises a CoD of 0x100114, 
+        /// Registry value <c>COD</c> at key <c>HKEY_LOCAL_MACHINE\Software\Microsoft\Bluetooth\sys</c>.
+        /// However my (Jam) has value 0x920100 there but advertises a CoD of 0x100114,
         /// so its not clear how the values relate to each other.
         /// </note>
         /// </para>
@@ -682,7 +682,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <exception cref="T:System.InvalidOperationException">
         /// The listener is already started.
         /// <para>- or -</para>
-        /// A custom Service Record was given at initialization time.  In that case 
+        /// A custom Service Record was given at initialization time.  In that case
         /// the ServiceName attribute should be added to that record.
         /// </exception>
         public String ServiceName
@@ -700,7 +700,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                 InitServiceRecord(this.serverEP.Service);
             }
         }
-	
+
         #endregion
 
         #region Server
@@ -939,7 +939,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// Returns the SDP Service Record for this service.
         /// </summary>
         /// <remarks>
-        /// <note>Returns <see langword="null"/> if the listener is not 
+        /// <note>Returns <see langword="null"/> if the listener is not
         /// <see cref="M:InTheHand.Net.Sockets.WindowsBluetoothListener.Start"/>ed
         /// (and an record wasn&#x2019;t supplied at initialization).
         /// </note>
@@ -1063,7 +1063,7 @@ namespace InTheHand.Net.Bluetooth.Msft
 
         public void SetPin(string pin)
         {
-#if WinXP
+#if (WinXP || WIN7)
             throw new NotSupportedException("Must supply the remote address on Win32.");
 #else
             m_optionHelper.SetPin(null, pin);

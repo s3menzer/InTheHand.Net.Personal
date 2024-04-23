@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Widcomm.WidcommSocketExceptions
-// 
+//
 // Copyright (c) 2008-2010 In The Hand Ltd, All rights reserved.
 // Copyright (c) 2008-2010 Alan J. McFarlane, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -25,9 +25,9 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         {
             System.Threading.ThreadStart handleError = delegate { };
 #if !NETCF
-            // On my old iPAQ the radio info functions fail sometimes even though 
-            // the stack is working fine so we ignored the errors in the first 
-            // release.  On Win32 this is a problem when the stack is installed 
+            // On my old iPAQ the radio info functions fail sometimes even though
+            // the stack is working fine so we ignored the errors in the first
+            // release.  On Win32 this is a problem when the stack is installed
             // but no radio is attached, so fail in that case.
             handleError = delegate {
                 throw new PlatformNotSupportedException(
@@ -57,7 +57,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
                 handleError();
             }
             //
-            // Did GetLocalDeviceVersionInfo get the address?  It doesn't work on 
+            // Did GetLocalDeviceVersionInfo get the address?  It doesn't work on
             // my iPAQ, but then again this way doesn't work either!
             if (LocalAddress == null || LocalAddress.ToInt64() == 0) {
                 Utils.MiscUtils.Trace_WriteLine("GetLocalDeviceVersionInfo's bd_addr is empty, trying GetLocalDeviceInfoBdAddr...");
@@ -85,8 +85,8 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         {
             get
             {
-                // Could return DesktopComputer/PdaComputer on the Win32/WM, but would 
-                // it just make the caller think this was supported, when we know no 
+                // Could return DesktopComputer/PdaComputer on the Win32/WM, but would
+                // it just make the caller think this was supported, when we know no
                 // way of getting the ServiceClass bits!
                 // Note also "MinorClass" value in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Widcomm\BTConfig\General\,
                 // but no ServiceClass entry as far as I can see.
@@ -220,7 +220,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
             }
             set
             {
-#if false && WinXP
+#if false && (WinXP || WIN7)
                 throw new NotSupportedException("No Widcomm API support.");
 #else
                 bool conno;

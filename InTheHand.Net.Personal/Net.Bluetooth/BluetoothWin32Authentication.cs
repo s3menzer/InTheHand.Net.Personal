@@ -24,7 +24,7 @@ namespace InTheHand.Net.Bluetooth
     /// </para>
     /// <para>Secondly it can also be used a mode where a user supplied
     /// callback will be called when any device requires authentication,
-    /// the callback includes a parameter of type 
+    /// the callback includes a parameter of type
     /// <see cref="T:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs"/>.
     /// Various authentication methods are available in Bluetooth version
     /// 2.1 and later.  Which one is being used is indicated by the
@@ -36,7 +36,7 @@ namespace InTheHand.Net.Bluetooth
     /// property.
     /// </para>
     /// <para>
-    /// For the other authentication methods 
+    /// For the other authentication methods
     /// e.g. <see cref="F:InTheHand.Net.Bluetooth.BluetoothAuthenticationMethod.NumericComparison"/>
     /// or <see cref="F:InTheHand.Net.Bluetooth.BluetoothAuthenticationMethod.OutOfBand"/>
     /// the callback method should use one or more of the other properties and
@@ -49,8 +49,8 @@ namespace InTheHand.Net.Bluetooth
     /// </para>
     /// <para>
     /// See the example below for a 'Legacy' method handler.
-    /// The callback mode can be configured to do a callback after the 
-    /// &#x2018;send PIN&#x2019; action, this allows one to see if it was successful 
+    /// The callback mode can be configured to do a callback after the
+    /// &#x2018;send PIN&#x2019; action, this allows one to see if it was successful
     /// etc.  An example sequence where the PIN was <strong>incorrect</strong> is as follows.
     /// </para>
     /// <code lang="none">
@@ -77,12 +77,12 @@ namespace InTheHand.Net.Bluetooth
     /// I suppose that's a security feature -- its stops an attacker
     /// from trying again and again with different passcodes.
     ///
-    /// Anyway the result of that is that is it <strong>not</strong> worth repeating 
-    /// the callback after the device disappears.  The code now enforces this.  With 
-    /// <see cref="P:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs.CallbackWithResult"/> 
-    /// set to <c>true</c>, if the result of the previous attempt was &#x2018;success&#x2019; 
-    /// or &#x2018;device not connected&#x2019; then any new PIN set in the callback 
-    /// won&#x2019;t be used and thus the callback won&#x2019;t be called again 
+    /// Anyway the result of that is that is it <strong>not</strong> worth repeating
+    /// the callback after the device disappears.  The code now enforces this.  With
+    /// <see cref="P:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs.CallbackWithResult"/>
+    /// set to <c>true</c>, if the result of the previous attempt was &#x2018;success&#x2019;
+    /// or &#x2018;device not connected&#x2019; then any new PIN set in the callback
+    /// won&#x2019;t be used and thus the callback won&#x2019;t be called again
     /// for that authentication attempt.
     /// </para>
     /// <para>A successful authentication process can thus be detected by checking if
@@ -92,7 +92,7 @@ namespace InTheHand.Net.Bluetooth
     /// </para>
     /// <para>The instance will continue receiving authentication requests
     /// until it is disposed or garbage collected, so keep a reference to it
-    /// whilst it should be active and call 
+    /// whilst it should be active and call
     /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothWin32Authentication.Dispose"/>
     /// when you&#x2019;re finished.
     /// </para>
@@ -107,7 +107,7 @@ namespace InTheHand.Net.Bluetooth
     /// // when the peer is expected to require pairing, perhaps do some work.
     /// authenticator.Dispose();
     /// </code>
-    /// 
+    ///
     /// If one wants to see the PIN request, perhaps to be able to check the type
     /// of the peer by its address then use the form here which requests callbacks.
     /// (Note that this code assumes that 'Legacy' PIN-based pairing is being
@@ -119,13 +119,13 @@ namespace InTheHand.Net.Bluetooth
     ///     Console.ReadLine()
     /// End Using
     /// ...
-    /// 
+    ///
     /// Sub Win32AuthCallbackHandler(ByVal sender As Object, ByVal e As InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs)
     ///    ' Note we assume here that 'Legacy' pairing is being used,
     ///    ' and thus we only set the Pin property!
     ///    Dim address As String = e.Device.DeviceAddress.ToString()
     ///    Console.WriteLine("Received an authentication request from address " + address)
-    ///    
+    ///
     ///    ' compare the first 8 hex numbers, this is just a special case because in the
     ///    ' used scenario the model of the devices can be identified by the first 8 hex
     ///    ' numbers, the last 4 numbers being the device specific part.
@@ -166,7 +166,7 @@ namespace InTheHand.Net.Bluetooth
 
         // This class is XP only, but XmlDocs generation is from CF2 only, so we need
         // to compile on that platform too.  So, leave the skeleton with no innards.
-#if WinXP
+#if (WinXP || WIN7)
         //
         bool m_hasKB942567 = true; // "Windows Vista Feature Pack for Wireless" etc.
         readonly IntPtr m_radioHandle = IntPtr.Zero;
@@ -193,7 +193,7 @@ namespace InTheHand.Net.Bluetooth
         /// <remarks>
         /// <para>The instance will continue receiving authentication requests
         /// until it is disposed or garbage collected, so keep a reference to it
-        /// whilst it should be active, and call 
+        /// whilst it should be active, and call
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothWin32Authentication.Dispose"/>
         /// when you&#x2019;re finished.
         /// </para>
@@ -207,7 +207,7 @@ namespace InTheHand.Net.Bluetooth
         /// </param>
         public BluetoothWin32Authentication(BluetoothAddress remoteAddress, String pin)
         {
-#if ! WinXP
+#if ! (WinXP || WIN7)
             throw new PlatformNotSupportedException("BluetoothWin32Authentication is Win32 only.");
 #else
             if (remoteAddress == null) {
@@ -233,8 +233,8 @@ namespace InTheHand.Net.Bluetooth
         /// <remarks>
         /// <para>See the example below.
         /// </para>
-        /// <para>The callback mode can be configured to do a callback after the 
-        /// &#x2018;send PIN&#x2019;action, this allows one to see if it was successful 
+        /// <para>The callback mode can be configured to do a callback after the
+        /// &#x2018;send PIN&#x2019;action, this allows one to see if it was successful
         /// etc.  An example sequence where the PIN was <strong>incorrect</strong> is as follows.
         /// </para>
         /// <code lang="none">
@@ -261,12 +261,12 @@ namespace InTheHand.Net.Bluetooth
         /// I suppose that's a security feature -- its stops an attacker
         /// from trying again and again with different passcodes.
         ///
-        /// Anyway the result of that is that is it <strong>not</strong> worth repeating 
-        /// the callback after the device disappears.  The code now enforces this.  With 
-        /// <see cref="P:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs.CallbackWithResult"/> 
-        /// set to <c>true</c>, if the result of the previous attempt was &#x2018;success&#x2019; 
-        /// or &#x2018;device not connected&#x2019; then any new PIN set in the callback 
-        /// won&#x2019;t be used and thus the callback won&#x2019;t be called again 
+        /// Anyway the result of that is that is it <strong>not</strong> worth repeating
+        /// the callback after the device disappears.  The code now enforces this.  With
+        /// <see cref="P:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs.CallbackWithResult"/>
+        /// set to <c>true</c>, if the result of the previous attempt was &#x2018;success&#x2019;
+        /// or &#x2018;device not connected&#x2019; then any new PIN set in the callback
+        /// won&#x2019;t be used and thus the callback won&#x2019;t be called again
         /// for that authentication attempt.
         /// </para>
         /// <para>A successful authentication process can thus be detected by setting
@@ -277,7 +277,7 @@ namespace InTheHand.Net.Bluetooth
         /// </para>
         /// <para>The instance will continue receiving authentication requests
         /// until it is disposed or garbage collected, so keep a reference to it
-        /// whilst it should be active, and call 
+        /// whilst it should be active, and call
         /// <see cref="M:InTheHand.Net.Bluetooth.BluetoothWin32Authentication.Dispose"/>
         /// when you&#x2019;re finished.
         /// </para>
@@ -294,11 +294,11 @@ namespace InTheHand.Net.Bluetooth
         ///     Console.ReadLine()
         /// End Using
         /// ...
-        /// 
+        ///
         /// Sub Win32AuthCallbackHandler(ByVal sender As Object, ByVal e As InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs)
         ///    Dim address As String = e.Device.DeviceAddress.ToString()
         ///    Console.WriteLine("Received an authentication request from address " + address)
-        ///    
+        ///
         ///    ' compare the first 8 hex numbers, this is just a special case because in the
         ///    ' used scenario the model of the devices can be identified by the first 8 hex
         ///    ' numbers, the last 4 numbers being the device specific part.
@@ -315,7 +315,7 @@ namespace InTheHand.Net.Bluetooth
         /// </example>
         public BluetoothWin32Authentication(EventHandler<BluetoothWin32AuthenticationEventArgs> handler)
         {
-#if ! WinXP
+#if ! (WinXP || WIN7)
             throw new PlatformNotSupportedException("BluetoothWin32Authentication is Win32 only.");
 #else
             m_userCallback = handler;
@@ -323,7 +323,7 @@ namespace InTheHand.Net.Bluetooth
 #endif
         }
 
-#if WinXP
+#if (WinXP || WIN7)
         private void Register(BluetoothAddress remoteAddress)
         {
             System.Diagnostics.Debug.Assert(m_pin == null ^ m_userCallback == null);
@@ -616,7 +616,7 @@ namespace InTheHand.Net.Bluetooth
                 case true:
                     rsp.negativeResponse = 0;
                     // Set the oob values
-                    // (Testing shows that P/Invoke disallowed only incorrect 
+                    // (Testing shows that P/Invoke disallowed only incorrect
                     // lengthinline arrays, null arrays are ok).
                     if (e.OobC != null) rsp.oobInfo.C = e.OobC;
                     if (e.OobR != null) rsp.oobInfo.R = e.OobR;
@@ -636,7 +636,7 @@ namespace InTheHand.Net.Bluetooth
         /// Calls the authentication callback handler.
         /// </summary>
         /// -
-        /// <param name="e">An instance of <see cref="T:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs"/> 
+        /// <param name="e">An instance of <see cref="T:InTheHand.Net.Bluetooth.BluetoothWin32AuthenticationEventArgs"/>
         /// containing the details of the authentication callback.
         /// </param>
         protected virtual void OnAuthentication(BluetoothWin32AuthenticationEventArgs e)
@@ -665,7 +665,7 @@ namespace InTheHand.Net.Bluetooth
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-#if WinXP
+#if (WinXP || WIN7)
             if (disposing) {
                 if (m_regHandle != null) {
                     m_regHandle.Dispose();
@@ -678,7 +678,7 @@ namespace InTheHand.Net.Bluetooth
     }//class
 
 
-#if WinXP
+#if (WinXP || WIN7)
     // Or should we derive from Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid?
     sealed internal class BluetoothAuthenticationRegistrationHandle
         : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid

@@ -1,7 +1,7 @@
 ﻿// 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Factory.IBluetoothSecurity
-// 
+//
 // Copyright (c) 2011 In The Hand Ltd, All rights reserved.
 // Copyright (c) 2011 Alan J. McFarlane, All rights reserved.
 //
@@ -92,6 +92,12 @@ namespace InTheHand.Net.Bluetooth.Factory
         {
             get;
             set;
+        }
+
+        public override void Close()
+        {
+          _child.Close();
+          base.Close();
         }
         #endregion
 

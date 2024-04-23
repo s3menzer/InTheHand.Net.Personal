@@ -23,7 +23,7 @@ namespace InTheHand.Net.Bluetooth.Factory
 {
     /// <exclude/>
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// -
     /// <remarks>
@@ -67,6 +67,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         // property reports the user-visible connected state.
         bool m_connected;
         protected/*TODO?*/ object _lockKey = new object();
+        protected object _sendLockKey = new object();
         BluetoothAddress m_remoteAddress;
         // Connect
         BluetoothAddress m_addressToConnect;
@@ -259,6 +260,7 @@ namespace InTheHand.Net.Bluetooth.Factory
                         m_state_ = State.Closed;
                         SetAsDisconnectedFromDisposal();
                         DisposeLinger(disposing, out exToThrow, out dbgExpectEmptyWriteQueue);
+                        lock (_sendLockKey)
                         lock (_lockKey) {
                             //Log("Dispose: in lock");
                             if (m_prevState == State.PeerDidClose) { // Don't know whether its ok to call twice...
@@ -350,7 +352,7 @@ namespace InTheHand.Net.Bluetooth.Factory
                         exToThrow = null;
                     } else {
                         // Wait for the linger-time to see if the writes are processed.
-                        lock (_lockKey) {
+                        lock (_sendLockKey) {
                             if (m_arWriteQueue.Count == 0) {
                                 // NOP
                             } else {
@@ -421,6 +423,7 @@ namespace InTheHand.Net.Bluetooth.Factory
             VerifyPortIsInRange(bep);
             int scn = bep.Port;
             //
+            lock(_sendLockKey)
             lock (_lockKey) {
                 if (m_state_ == State.Closed)
                     throw new ObjectDisposedException(ObjectDisposedException_ObjectName);
@@ -485,6 +488,7 @@ namespace InTheHand.Net.Bluetooth.Factory
             VerifyPortIsInRange(bep);
             int scn = bep.Port;
             //
+            lock (_sendLockKey)
             lock (_lockKey) {
                 if (m_state_ == State.Closed)
                     throw new ObjectDisposedException(ObjectDisposedException_ObjectName);
@@ -542,6 +546,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         protected void HandleCONNECTED(string eventId)
         {
             AsyncResultNoResult sacAr; // Call SetAsCompleted outside the lock.
+            lock (_sendLockKey)
             lock (_lockKey) {
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                     "CONNECTED {0}; m_state: {1}; m_arConnect {2}, IsCompleted: {3}.",
@@ -617,6 +622,7 @@ namespace InTheHand.Net.Bluetooth.Factory
             Exception sacEx;
             ReadAsyncResult[] allRead = null;
             WriteAsyncResult[] allWrite = null;
+            lock (_sendLockKey)
             lock (_lockKey) {
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                     "CONNECT_ERR {0}, m_state: {1}, m_arConnect {2}",
@@ -675,7 +681,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         }
 
         /// <summary>
-        /// Used: 1. when we get CONNECT_ERR from the stack, and POSSIBLY 2. when we close the 
+        /// Used: 1. when we get CONNECT_ERR from the stack, and POSSIBLY 2. when we close the
         /// stream to do consumer timeout (SO_RCVTIMEO/etc).
         /// </summary>
         /// <param name="allRead">Out: to call <see cref="M:InTheHand.Net.Bluetooth.Widcomm.WidcommRfcommStream.AbortIf(System.Collections.Generic.IList{InTheHand.Net.AsyncResult{System.Int32,InTheHand.Net.Bluetooth.Widcomm.WidcommRfcommStream.BeginReadParameters}}, System.Collections.Generic.IList{InTheHand.Net.AsyncNoResult{InTheHand.Net.Bluetooth.Widcomm.WidcommRfcommStream.BeginReadParameters}})"/>
@@ -724,6 +730,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         {
             ReadAsyncResult[] allRead; WriteAsyncResult[] allWrite;
             AsyncResultNoResult connectToAbort = null;
+            lock (_sendLockKey)
             lock (_lockKey) {
                 CloseInternal(out allRead, out allWrite);
                 if (m_arConnect != null) {
@@ -999,6 +1006,7 @@ namespace InTheHand.Net.Bluetooth.Factory
                 if (signalled) {
                     break;
                 } else {
+                    lock (_sendLockKey)
                     lock (_lockKey) {
                         if (queue.Count == 0) {
                             // The operation timed-out but completed before we
@@ -1055,7 +1063,7 @@ namespace InTheHand.Net.Bluetooth.Factory
             Queue<WriteAsyncResult> sacArQueue = new Queue<WriteAsyncResult>();
             WriteAsyncResult sacErroredLast = null;
             Exception sacEx = null;
-            lock (_lockKey) {
+            lock (_sendLockKey) {
                 int loops = 0;
                 while (m_arWriteQueue.Count != 0) {
                     ++loops;
@@ -1125,7 +1133,7 @@ namespace InTheHand.Net.Bluetooth.Factory
         {
             EnsureOpenForWrite();
             WriteAsyncResult sacAr; // SetAsComplete outside the lock.
-            lock (_lockKey) {
+            lock (_sendLockKey) {
                 WriteAsyncResult ar;
                 if (m_arWriteQueue.Count == 0) { // Try to complete the send immediately.
                     bool success = false;
@@ -1234,8 +1242,8 @@ namespace InTheHand.Net.Bluetooth.Factory
 
         public override void Flush()
         {
-            // Can we do anything here?  We're not a buffered stream so there is 
-            // no need to flush.  Any data in the write queue is there due to flow 
+            // Can we do anything here?  We're not a buffered stream so there is
+            // no need to flush.  Any data in the write queue is there due to flow
             // control, we can only send it when the stack signals that its ready.
         }
 

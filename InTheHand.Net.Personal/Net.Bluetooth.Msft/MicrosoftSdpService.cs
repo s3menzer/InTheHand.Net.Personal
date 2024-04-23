@@ -1,7 +1,7 @@
 ﻿// 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.MicrosoftSdpService
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // Copyright (c) 2003-2011 Alan J. McFarlane, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -66,14 +66,14 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// containing any bits to set in the devices Class of Device value.
         /// </param>
         /// -
-        /// <returns>A handle representing the record, pass to 
+        /// <returns>A handle representing the record, pass to
         /// <see cref="RemoveService"/> to remote the record.
         /// </returns>
         public static IntPtr SetService(byte[] sdpRecord, ServiceClass cod)
         {
             BTHNS_SETBLOB blob = new BTHNS_SETBLOB(sdpRecord);
             //added for XP - adds class of device bits
-#if WinXP
+#if (WinXP || WIN7)
             blob.CodService = (uint)cod;
 #endif
 

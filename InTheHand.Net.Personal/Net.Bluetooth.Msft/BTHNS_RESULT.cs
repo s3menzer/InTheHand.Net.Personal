@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.BTHNS_RESULT
-// 
+//
 // Copyright (c) 2003-2006,2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -9,9 +9,9 @@ using System;
 
 namespace InTheHand.Net.Bluetooth.Msft
 {
-#if WinXP
+#if (WinXP || WIN7)
 	/// <summary>
-	/// Bluetooth specific flags returned from WSALookupServiceNext 
+	/// Bluetooth specific flags returned from WSALookupServiceNext
 	/// in WSAQUERYSET.dwOutputFlags in response to device inquiry.
 	/// </summary>
 	[Flags()]

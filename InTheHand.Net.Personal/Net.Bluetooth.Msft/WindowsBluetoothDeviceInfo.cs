@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Msft.BluetoothDeviceInfo
-// 
+//
 // Copyright (c) 2003-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -42,7 +42,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         DateTime m_lastSeen; //stored in the struct on Win32
 #endif
 
-#if WinXP
+#if (WinXP || WIN7)
         private bool valid = false;
 #endif
         RadioVersions _remoteVersionsInfo;
@@ -59,7 +59,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         {
             deviceInfo = new BLUETOOTH_DEVICE_INFO(0);
             Marshal.PtrToStructure(pDevice, deviceInfo);
-#if WinXP
+#if (WinXP || WIN7)
             valid = true;
 #endif
         }
@@ -67,13 +67,13 @@ namespace InTheHand.Net.Bluetooth.Msft
         internal WindowsBluetoothDeviceInfo(BLUETOOTH_DEVICE_INFO device)
         {
             deviceInfo = device;
-#if WinXP
+#if (WinXP || WIN7)
             valid = true;
 #endif
         }
 
         /// <summary>
-        /// Initializes an instance of the <see cref="T:BluetoothDeviceInfo"/> class 
+        /// Initializes an instance of the <see cref="T:BluetoothDeviceInfo"/> class
         /// for the device with the given address.
         /// </summary>
         public WindowsBluetoothDeviceInfo(BluetoothAddress address)
@@ -82,7 +82,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                 throw new ArgumentNullException("address");
             }
             this.deviceInfo = new BLUETOOTH_DEVICE_INFO(address.ToInt64());
-#if WinXP
+#if (WinXP || WIN7)
             GetDeviceInfo();
             valid = true;
 #endif
@@ -106,7 +106,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         #endregion
 
         #region Get Device Info
-#if WinXP
+#if (WinXP || WIN7)
         private void GetDeviceInfo()
         {
             if (!valid) {
@@ -133,7 +133,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// </remarks>
         public void Refresh()
         {
-#if WinXP
+#if (WinXP || WIN7)
             valid = false;
 #endif
             deviceInfo.ulClassofDevice = 0;
@@ -252,10 +252,10 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// -
         /// <remarks>
         /// <para>
-        /// Some CE 4.2 devices such as original PPC2003 devices don't have the native 
-        /// API on which this property depends &#x2014; it was added as part of a hotfix. 
-        /// The property will always return zero in such a case.  On WM/CE we also 
-        /// attempt to get the CoD value as part of the discovery process; this is 
+        /// Some CE 4.2 devices such as original PPC2003 devices don't have the native
+        /// API on which this property depends &#x2014; it was added as part of a hotfix.
+        /// The property will always return zero in such a case.  On WM/CE we also
+        /// attempt to get the CoD value as part of the discovery process; this is
         /// of course only works for devices in-range.
         /// </para>
         /// </remarks>
@@ -309,7 +309,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// </para>
         /// <note type="caution">Requires Windows Mobile 5.0 or Windows Embedded CE 6.0</note>
         /// <para>As well as the &#x2018;no connection&#x2019; issue, the native method
-        /// on which the property depends is only present in later OS versions, so it 
+        /// on which the property depends is only present in later OS versions, so it
         /// will fail on earlier devices.
         /// </para>
         /// </remarks>
@@ -364,7 +364,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// Returns a list of services which are already installed for use on the calling machine.
         /// </summary>
         /// <remarks>
-        /// <para>This property returns the services already configured for use. 
+        /// <para>This property returns the services already configured for use.
         /// Those are the ones that are checked in the &#x201C;Services&#x201D; tab
         /// of the device&#x2019;s property sheet in the Bluetooth Control panel.
         /// I presume the behaviour is similar on CE.
@@ -374,7 +374,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <para>It of course will also only returns standard system services which Windows understands.
         /// (On desktop Windows this method calls the OS function <c>BluetoothEnumerateInstalledServices</c>).
         /// </para>
-        /// <para>To see all the services that a device advertises use the 
+        /// <para>To see all the services that a device advertises use the
         /// <see cref="M:InTheHand.Net.Sockets.BluetoothDeviceInfo.GetServiceRecords(System.Guid)"/>
         /// method.
         /// </para>
@@ -384,7 +384,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             get
             {
 #if NETCF
-                
+
                 if (this.Authenticated)
                 {
                     try
@@ -414,7 +414,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                     }
                 }
                 return new Guid[0];
-            
+
 #else
 
                 GetDeviceInfo();
@@ -452,7 +452,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <param name="state">Service state - TRUE to enable the service, FALSE to disable it.</param>
         /// <remarks>
         /// When called on Windows CE, the device will require a soft-reset to enabled the settings.
-        /// 
+        ///
         ///<note>
         /// <para>The system maintains a mapping of service guids to supported drivers for
         /// Bluetooth-enabled devices. Enabling a service installs the corresponding
@@ -479,7 +479,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <param name="service">The service GUID on the remote device.</param>
         /// <param name="state">Service state - TRUE to enable the service, FALSE to disable it.</param>
         /// <param name="throwOnError">Whether the method should raise an exception
-        /// when 
+        /// when
         /// </param>
         /// <remarks>
         /// When called on Windows CE, the device will require a soft-reset to enabled the settings.
@@ -507,7 +507,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                     Microsoft.Win32.RegistryKey rkPorts = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Bluetooth\\Serial\\Ports", true);
                     string[] supportedPorts = (string[])rkPorts.GetValue("SupportedPorts");
                     System.Collections.Generic.List<string> availablePorts = new System.Collections.Generic.List<string>(supportedPorts);
-                    
+
                     //remove any port names from the list which are already in use
                     string[] comPorts = System.IO.Ports.SerialPort.GetPortNames();
                     foreach (string comPort in comPorts)
@@ -519,7 +519,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                     }
 
                     //COM0 is not supported by a lot of third-party software so move it to the end of the list if present
-                    
+
                     /*if (alPorts[0].ToString() == "COM0")
                     {
                         alPorts.RemoveAt(0);
@@ -695,8 +695,8 @@ namespace InTheHand.Net.Bluetooth.Msft
 #else
             GetDeviceInfo();
             // MSDN says the posible errors are:
-            //   ERROR_INVALID_PARAMETER The dwServiceFlags are invalid. 
-            //   ERROR_SERVICE_DOES_NOT_EXIST The GUID specified in pGuidService is not supported. 
+            //   ERROR_INVALID_PARAMETER The dwServiceFlags are invalid.
+            //   ERROR_SERVICE_DOES_NOT_EXIST The GUID specified in pGuidService is not supported.
             // Numerically:
             //   #define ERROR_FILE_NOT_FOUND             2L
             //   #define ERROR_SERVICE_DOES_NOT_EXIST     1060L
@@ -758,9 +758,9 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <para>
         /// For instance to see whether the device has an an Serial Port services
         /// search for UUID <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.SerialPort"/>,
-        /// or too find all the services that use RFCOMM use 
+        /// or too find all the services that use RFCOMM use
         /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.RFCommProtocol"/>,
-        /// or all the services use 
+        /// or all the services use
         /// <see cref="F:InTheHand.Net.Bluetooth.BluetoothService.L2CapProtocol"/>.
         /// </para>
         /// <para>
@@ -773,7 +773,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// <param name="service">The UUID to search for, as a <see cref="T:System.Guid"/>.
         /// </param>
         /// -
-        /// <returns>The parsed record as an 
+        /// <returns>The parsed record as an
         /// <see cref="T:InTheHand.Net.Bluetooth.ServiceRecord"/>.
         /// </returns>
         /// -
@@ -787,7 +787,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// Next
         /// </code>
         /// </example>
-        /// 
+        ///
         /// -
         /// <exception cref="T:System.Net.Sockets.SocketException">
         /// The query failed.
@@ -841,7 +841,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         }
 
         /// <summary>
-        /// Returns the raw results from the native call(s); the format is different 
+        /// Returns the raw results from the native call(s); the format is different
         /// on Win32 versus WinCE.
         /// </summary>
         /// <remarks>
@@ -868,13 +868,13 @@ namespace InTheHand.Net.Bluetooth.Msft
 #if NETCF
             CSADDR_INFO sainfo = new CSADDR_INFO(null, this.DeviceAddress , SocketType.Unknown, ProtocolType.Unknown);
             wqs.dwNumberOfCsAddrs = 1;
-            
+
             IntPtr pSaInfo = Marshal32.AllocHGlobal(24);
             IntPtr pBrb = Marshal32.AllocHGlobal(256);
             IntPtr pService = Marshal32.AllocHGlobal(240);
 
             Marshal.StructureToPtr(sainfo, pSaInfo, false);
-            wqs.lpcsaBuffer = pSaInfo;            
+            wqs.lpcsaBuffer = pSaInfo;
 
             Marshal.WriteInt32(pBrb, 0, (int)SdpQueryType.SearchAttributeRequest);
 
@@ -895,18 +895,18 @@ namespace InTheHand.Net.Bluetooth.Msft
             //max attribute
             Marshal.StructureToPtr((ushort)0xffff, (IntPtr)(pBrb.ToInt32() + 254), false);
             //Marshal.WriteInt16(pBrb, 254, 0x800);
-            
+
             BLOB b = new BLOB(256, pBrb);
 
             IntPtr pb = Marshal32.AllocHGlobal(8);
 
             Marshal.StructureToPtr(b, pb, false);
             wqs.lpBlob = pb;
-            
+
 #endif
 
 
-#if WinXP
+#if (WinXP || WIN7)
             GCHandle hservice = GCHandle.Alloc(service.ToByteArray(), GCHandleType.Pinned);
             wqs.lpServiceClassId = hservice.AddrOfPinnedObject();
             wqs.lpszContext = "(" + this.DeviceAddress.ToString("C") + ")"; // sb.ToString(); // hContext.AddrOfPinnedObject();
@@ -950,7 +950,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             SocketBluetoothClient.ThrowSocketExceptionForHR(lookupresult);
 
 
-#if WinXP
+#if (WinXP || WIN7)
             hservice.Free();
 #endif
 
@@ -1033,7 +1033,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         /// Specifies whether the device is a remembered device. Not all remembered devices are authenticated.
         /// </summary>
         /// -
-        /// <remarks>Now supported under Windows CE &#x2014; will return the same as 
+        /// <remarks>Now supported under Windows CE &#x2014; will return the same as
         /// <see cref="P:InTheHand.Net.Sockets.BluetoothDeviceInfo.Authenticated"/>.
         /// </remarks>
         /// <seealso cref="Connected"/>
@@ -1043,7 +1043,7 @@ namespace InTheHand.Net.Bluetooth.Msft
             get
             {
 #if NETCF
-                System.Diagnostics.Debug.Assert(deviceInfo.fAuthenticated == deviceInfo.fRemembered, 
+                System.Diagnostics.Debug.Assert(deviceInfo.fAuthenticated == deviceInfo.fRemembered,
                     "CE fAuthenticated == fRemembered");
 #else
                 GetDeviceInfo();
@@ -1064,7 +1064,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         {
             get
             {
-#if WinXP
+#if (WinXP || WIN7)
                 GetDeviceInfo();
 #else
                 System.Diagnostics.Debug.Assert(deviceInfo.fAuthenticated == deviceInfo.fRemembered,
@@ -1144,7 +1144,7 @@ namespace InTheHand.Net.Bluetooth.Msft
         {
             if (_remoteVersionsInfo != null)
                 return;
-#if WinXP
+#if (WinXP || WIN7)
             bool success;
             BTH_RADIO_INFO buf;
             IntPtr radioHandle = BluetoothRadio.PrimaryRadio.Handle;
@@ -1191,7 +1191,7 @@ namespace InTheHand.Net.Bluetooth.Msft
                 var gle = Marshal.GetLastWin32Error();
                 var ex = new System.ComponentModel.Win32Exception(ret);
                 Debug.WriteLine("BthReadRemoteVersion fail: " + ret + ", gle: " + gle);
-                Debug.Assert(ret == gle, "WAS using gle but docs say use ret. Check that are the same."); 
+                Debug.Assert(ret == gle, "WAS using gle but docs say use ret. Check that are the same.");
                 throw ex;
             }
 #endif

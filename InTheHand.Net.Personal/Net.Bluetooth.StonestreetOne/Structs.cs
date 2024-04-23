@@ -1,7 +1,7 @@
 ﻿// 32feet.NET - Personal Area Networking for .NET
 //
 // Net.Bluetooth.StonestreetOne.Structs
-// 
+//
 // Copyright (c) 2010-2011 Alan J.McFarlane, All rights reserved.
 // Copyright (c) 2010-2011 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -135,13 +135,13 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
                 Microsoft.Win32.RegistryKey rkStoneStreet = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Stonestreet One\\BTExplorer\\Device Settings", false);
                 if (rkStoneStreet != null) {
                     object val;
-                    val = rkStoneStreet.GetValue("PortNumber", 0);
+					val = rkStoneStreet.GetValue("PortNumber", portNumber.ToString());
                     portNumber = Convert.ToInt32(val, CultureInfo.InvariantCulture);
-                    val = rkStoneStreet.GetValue("PortBaudRate", 0);
+					val = rkStoneStreet.GetValue("PortBaudRate", baudRate.ToString());
                     baudRate = Convert.ToInt32(val, CultureInfo.InvariantCulture);
-                    val = rkStoneStreet.GetValue("PortProtocol", 1);
+					val = rkStoneStreet.GetValue("PortProtocol", ((int)protocol).ToString());
                     protocol = (StackConsts.HCI_COMM_Protocol)Convert.ToInt32(val, CultureInfo.InvariantCulture);
-                    val = rkStoneStreet.GetValue("InitializationPortBaudRate", "115200");
+					val = rkStoneStreet.GetValue("InitializationPortBaudRate", initBaud);
                     initBaud = Convert.ToInt32(val, CultureInfo.InvariantCulture);
                     driverName = rkStoneStreet.GetValue("PortPrefix", "BTS").ToString();
                     rkStoneStreet.Close();
@@ -453,13 +453,13 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
             //   GAP_Link_Key_Info_t Key_Info;
             //   DWord_t             Numeric_Value;
             //   Keypress_t          Keypress_Type;
-            //} Authentication_Event_Data;     
+            //} Authentication_Event_Data;
             // with
             //struct _tagGAP_Link_Key_Info_t
             //{
             //   Link_Key_t  Link_Key;
             //   Byte_t      Key_Type;
-            //} GAP_Link_Key_Info_t; 
+            //} GAP_Link_Key_Info_t;
             const int PadOnNonSspPlatforms = 0;
             const int PadOnSspPlatforms = 2;
             const int MaxPad = PadOnSspPlatforms;
@@ -1396,7 +1396,7 @@ namespace InTheHand.Net.Bluetooth.StonestreetOne
         //#define SDP_DATA_ELEMENT_SIZE                           (sizeof(SDP_Data_Element_t))
 
         /// <summary>
-        /// The following Data Structure represents the SDP Error Response          
+        /// The following Data Structure represents the SDP Error Response
         /// Information that is returned by a Remote SDP Server when an
         /// invalid request has been received.  The Error_Info field is an
         /// optional field that may or may be present depending upon the

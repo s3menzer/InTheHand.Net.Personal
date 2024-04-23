@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Bluetooth.Factory.BluetoothFactory
-// 
+//
 // Copyright (c) 2003-2010 In The Hand Ltd, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
 
@@ -219,8 +219,8 @@ namespace InTheHand.Net.Bluetooth.Factory
                     foreach (var cur in s_factories) {
                         ((IDisposable)cur).Dispose();
                     }
+				s_factories = null;
             }//lock
-            s_factories = null;
         }
 
 

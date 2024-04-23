@@ -1,7 +1,7 @@
 // 32feet.NET - Personal Area Networking for .NET
 //
 // InTheHand.Net.Widcomm.WidcommSocketExceptions
-// 
+//
 // Copyright (c) 2008-2009 In The Hand Ltd, All rights reserved.
 // Copyright (c) 2008-2009 Alan J. McFarlane, All rights reserved.
 // This source code is licensed under the In The Hand Community License - see License.txt
@@ -16,7 +16,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
 {
     static class WidcommStructs
     {
-#if WinXP
+#if (WinXP || WIN7)
         internal const int StructLayoutPack = 1;    // <BtIfClasses.h> has: #pragma pack (1)
 #else
         internal const int StructLayoutPack = 0;    // Use platform default.
@@ -28,7 +28,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
     }
 
     //------------------------------------------------------------------
-#if WinXP
+#if (WinXP || WIN7)
     [StructLayout(LayoutKind.Sequential, Pack = WidcommStructs.StructLayoutPack)]
 #endif
     struct REM_DEV_INFO
@@ -44,7 +44,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
     }
 
     //------------------------------------------------------------------
-#if WinXP
+#if (WinXP || WIN7)
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
 #endif
     internal struct DEV_VER_INFO
@@ -131,7 +131,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_DUN_ERR_NO_API,
         WBT_DUN_ERR_NO_DISPATCH,
         WBT_DUN_ERROR,
-        
+
         WBT_NO_FAX_API_OBJECT,
         WBT_FAX_ERR_CREATE_API,
         WBT_FAX_ERR_CANNOT_CREATE_API,
@@ -146,19 +146,19 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_LAP_ERR_INVALID_DISPATCH,
         WBT_LAP_ERR_NO_API,
         WBT_LAP_ERR_NO_DISPATCH,
-        WBT_LAP_ERROR,  
+        WBT_LAP_ERROR,
 
         WBT_NO_OPP_API_OBJECT,
         WBT_OPP_ERR_CREATE_API,
         WBT_OPP_ERR_CANNOT_CREATE_API,
         WBT_OPP_ERR_INVALID_DISPATCH,
-        WBT_OPP_ERROR,  
+        WBT_OPP_ERROR,
 
         WBT_NO_SYNC_API_OBJECT,
         WBT_SYNC_ERR_CANNOT_CREATE_API,
         WBT_SYNC_ERR_INVALID_DISPATCH,
         WBT_SYNC_ERR_NO_API,
-        WBT_SYNC_ERROR,  
+        WBT_SYNC_ERROR,
 
         WBT_NO_TRACE_API_OBJECT,
         WBT_TRACE_ERR_CANNOT_CREATE_API,
@@ -166,7 +166,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_TRACE_ERR_NO_API,
         WBT_TRACE_ERR_MALLOC_SINK,
         WBT_TRACE_ERR_INVALID_SINK,
-        WBT_TRACE_ERROR,  
+        WBT_TRACE_ERROR,
 
         WBT_NO_HSP_API_OBJECT,
         WBT_HSP_ERR_CANNOT_CREATE_API,
@@ -188,7 +188,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_HCRP_ERR_NO_API,
         WBT_HCRP_ERR_NO_DISPATCH,
         WBT_HCRP_ERROR,
-        
+
         WBT_NO_VDP_API_OBJECT,
         WBT_VDP_ERR_CANNOT_CREATE_API,
         WBT_VDP_ERR_INVALID_DISPATCH,
@@ -198,18 +198,18 @@ namespace InTheHand.Net.Bluetooth.Widcomm
 
         WBT_BUSY,                               // Busy with another operation
         WBT_ERR_SERVER_DOWN,
-        WBT_ERR_ALLOC_SCN_FAILED,               
-        WBT_ERR_SDP_FULL,                       
-        WBT_ERR_RFCOMM_CONNECTION_FAILED,       
-        WBT_ERR_SERVICE_NOT_FOUND,              
-        WBT_ERR_UNKNOWN_PORT,                   
-        WBT_ERR_TRANSPORT_NOT_FOUND,            
-        WBT_ERR_PPP_START_FAILED,               
-        WBT_ERR_RAS_NOT_LOADED,                 
-        WBT_ERR_RAS_CONNECTION_SETUP_FAILED,    
-        WBT_ERR_NO_MODEM_FOUND,                 
-        WBT_ERR_LANACCESS_START_FAILED,         
-        WBT_ERR_NOT_ENOUGH_MEMORY,              // 
+        WBT_ERR_ALLOC_SCN_FAILED,
+        WBT_ERR_SDP_FULL,
+        WBT_ERR_RFCOMM_CONNECTION_FAILED,
+        WBT_ERR_SERVICE_NOT_FOUND,
+        WBT_ERR_UNKNOWN_PORT,
+        WBT_ERR_TRANSPORT_NOT_FOUND,
+        WBT_ERR_PPP_START_FAILED,
+        WBT_ERR_RAS_NOT_LOADED,
+        WBT_ERR_RAS_CONNECTION_SETUP_FAILED,
+        WBT_ERR_NO_MODEM_FOUND,
+        WBT_ERR_LANACCESS_START_FAILED,
+        WBT_ERR_NOT_ENOUGH_MEMORY,              //
         WBT_ERR_BAD_SCN,                        // invalid scn for connection
         WBT_ERR_ALLOC_SCN,                      // unable to allocate SCN
         WBT_ERR_CREATE_SDP_RECORD,              // unable to create SDP record
@@ -345,7 +345,7 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_PAN_INVALID_REQ,                /* invalid request from app */
         WBT_PAN_WRONG_ROLE,                 /* PAN is in invalid role state */
         WBT_PAN_NAP_BOTH_SIDES,             /* NAP is setup on both sides */
-        
+
         /* General connection error codes */
         WBT_CONN_ERR_BASE = 0x810001A0,
 
@@ -399,10 +399,10 @@ namespace InTheHand.Net.Bluetooth.Widcomm
         WBT_VOICE_RECO_STATUS_SEVEN,            /* User said seven */
         WBT_VOICE_RECO_STATUS_EIGHT,            /* User said eight */
         WBT_VOICE_RECO_STATUS_NINE,             /* User said nine */
-        WBT_VOICE_RECO_STATUS_ZERO,             /* User said zero */    
-        WBT_VOICE_RECO_STATUS_CALL_COMMAND,    /* Call Command received */    
+        WBT_VOICE_RECO_STATUS_ZERO,             /* User said zero */
+        WBT_VOICE_RECO_STATUS_CALL_COMMAND,    /* Call Command received */
         WBT_VOICE_RECO_STATUS_MOVE_PROGRESS,    /* Dial timer ticked one */
         WBT_VOICE_RECO_STATUS_DIAL_DONE        /* Dial number done */
-    
+
 }
 }
